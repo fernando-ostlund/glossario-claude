@@ -8,6 +8,7 @@ function renderSidebar(activePage) {
     { section: 'Começar', items: [
       { label: 'Início', href: '/', id: 'home' },
       { label: 'Cursos Anthropic', href: '/pages/cursos.html', id: 'cursos' },
+      { label: 'Meu Setup', href: '/pages/dashboard.html', id: 'dashboard' },
     ]},
     { section: 'Glossário', items: [
       { label: 'Conceitos básicos', href: '/pages/basicos.html', id: 'basicos' },

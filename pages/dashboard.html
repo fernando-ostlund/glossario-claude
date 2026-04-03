@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Setup — Glossário Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Meu Setup</div>
+    <div class="section-label">Painel de controle</div>
+    <h1 class="page-title">Meu Setup</h1>
+    <p class="page-desc">Tudo que está instalado na sua CLI. Skills, agentes, hooks e conexões externas — o que cada um faz e como acionar.</p>
+
+    <!-- ========== STATS ========== -->
+    <div class="dash-stats">
+      <div class="dash-stat">
+        <div class="dash-stat-icon dash-stat-icon--skills">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <div class="dash-stat-number">48</div>
+        <div class="dash-stat-label">Skills</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-icon dash-stat-icon--agents">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="dash-stat-number">12</div>
+        <div class="dash-stat-label">Agentes</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-icon dash-stat-icon--hooks">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="dash-stat-number">1</div>
+        <div class="dash-stat-label">Hook</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-icon dash-stat-icon--mcps">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="dash-stat-number">4</div>
+        <div class="dash-stat-label">MCPs</div>
+      </div>
+    </div>
+
+    <!-- ========== CATEGORY FILTER ========== -->
+    <div class="dash-filters" id="dash-filters">
+      <button class="dash-filter active" data-filter="all">Tudo</button>
+      <button class="dash-filter" data-filter="skills">Skills</button>
+      <button class="dash-filter" data-filter="agents">Agentes</button>
+      <button class="dash-filter" data-filter="hooks">Hooks</button>
+      <button class="dash-filter" data-filter="mcps">MCPs</button>
+    </div>
+
+    <!-- ========== SEARCH ========== -->
+    <div class="dash-search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/>
+      </svg>
+      <input type="text" id="dash-search-input" placeholder="Buscar por nome, comando ou categoria...">
+    </div>
+
+    <!-- ====================================================================
+         SKILLS — organized by category
+         ==================================================================== -->
+    <div class="dash-section" data-type="skills">
+      <div class="dash-section-header">
+        <div class="dash-section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <h2 class="dash-section-title">Skills <span class="dash-count">48</span></h2>
+      </div>
+      <p class="section-intro">Instruções especializadas que o Claude segue automaticamente quando reconhece o contexto, ou que você aciona com <code>/comando</code>.</p>
+
+      <!-- ── Design & UI ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Design & UI
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">frontend-design</span>
+              <code class="dash-cmd">/frontend-design</code>
+            </div>
+            <p class="dash-card-desc">Cria interfaces frontend production-grade com alto design. Evita estética genérica de IA.</p>
+            <div class="dash-card-when">Quando pedir para criar componentes web, páginas ou aplicações.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">ui-build</span>
+              <code class="dash-cmd">/ui-build</code>
+            </div>
+            <p class="dash-card-desc">Gera HTML visual para entregas do Entropia. HTML/CSS autocontido, responsivo, dark mode.</p>
+            <div class="dash-card-when">Quando mencionar "gerar o HTML", "criar a página visual", "montar o dashboard".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">ui-research</span>
+              <code class="dash-cmd">/ui-research</code>
+            </div>
+            <p class="dash-card-desc">Define e atualiza design systems: paleta de cores, tipografia, tokens, grid, dark mode.</p>
+            <div class="dash-card-when">Quando mencionar "design system", "tokens", "paleta", "tipografia".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">canvas-design</span>
+              <code class="dash-cmd">/canvas-design</code>
+            </div>
+            <p class="dash-card-desc">Cria arte visual estática em PNG e PDF usando filosofia de design.</p>
+            <div class="dash-card-when">Quando pedir para criar poster, peça de arte ou design visual.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">stitch-design</span>
+              <code class="dash-cmd">/stitch-design</code>
+            </div>
+            <p class="dash-card-desc">Entry point unificado para trabalho com Stitch: prompt enhancement, design system, geração de telas.</p>
+            <div class="dash-card-when">Quando trabalhar com projetos Stitch ou geração de telas via MCP.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">design-md</span>
+              <code class="dash-cmd">/design-md</code>
+            </div>
+            <p class="dash-card-desc">Analisa projetos Stitch e sintetiza design systems semânticos em DESIGN.md.</p>
+            <div class="dash-card-when">Quando precisar documentar ou sintetizar um design system existente.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">enhance-prompt</span>
+              <code class="dash-cmd">/enhance-prompt</code>
+            </div>
+            <p class="dash-card-desc">Transforma ideias vagas de UI em prompts polidos e otimizados para Stitch.</p>
+            <div class="dash-card-when">Quando a descrição da UI for genérica e precisar ser refinada.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">theme-factory</span>
+              <code class="dash-cmd">/theme-factory</code>
+            </div>
+            <p class="dash-card-desc">10 temas visuais pré-definidos para aplicar a slides, docs, reports, HTML.</p>
+            <div class="dash-card-when">Quando precisar aplicar um tema visual coeso a qualquer artefato.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">typography-review</span>
+              <code class="dash-cmd">/typography-review</code>
+            </div>
+            <p class="dash-card-desc">Audita tipografia em HTML: contraste, escala, alinhamento óptico, x-height.</p>
+            <div class="dash-card-when">Quando precisar revisar a tipografia antes de publicar.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">brand-guidelines</span>
+              <code class="dash-cmd">/brand-guidelines</code>
+            </div>
+            <p class="dash-card-desc">Aplica cores e tipografia oficiais da Anthropic a artefatos.</p>
+            <div class="dash-card-when">Quando o artefato precisa do look-and-feel da Anthropic.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">vercel-web-design-guidelines</span>
+              <code class="dash-cmd">/vercel-web-design-guidelines</code>
+            </div>
+            <p class="dash-card-desc">Review de UI contra Web Interface Guidelines: acessibilidade, usabilidade, padrões web.</p>
+            <div class="dash-card-when">Quando pedir "review my UI", "check accessibility", "audit design".</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Animation & Video ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Animação & Vídeo
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">framer-motion</span>
+              <code class="dash-cmd">/framer-motion</code>
+            </div>
+            <p class="dash-card-desc">Animações web em React: hover, scroll triggers, transições, reveals orquestrados.</p>
+            <div class="dash-card-when">Quando adicionar animações a componentes React.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">remotion</span>
+              <code class="dash-cmd">/remotion</code>
+            </div>
+            <p class="dash-card-desc">Criação de vídeo em React: efeitos, áudio, legendas, conteúdo 3D programático.</p>
+            <div class="dash-card-when">Quando criar vídeos programáticos com React.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">slack-gif-creator</span>
+              <code class="dash-cmd">/slack-gif-creator</code>
+            </div>
+            <p class="dash-card-desc">Cria GIFs animados otimizados para Slack com validação de constraints.</p>
+            <div class="dash-card-when">Quando pedir "make me a GIF for Slack".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">algorithmic-art</span>
+              <code class="dash-cmd">/algorithmic-art</code>
+            </div>
+            <p class="dash-card-desc">Arte generativa com p5.js: flow fields, sistemas de partículas, randomness controlada.</p>
+            <div class="dash-card-when">Quando pedir arte generativa, algorithmic art, flow fields.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Code & Frameworks ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Código & Frameworks
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">shadcn-ui</span>
+              <code class="dash-cmd">/shadcn-ui</code>
+            </div>
+            <p class="dash-card-desc">Guia expert para componentes shadcn/ui: descoberta, instalação, customização.</p>
+            <div class="dash-card-when">Quando trabalhar com shadcn/ui components.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">react-components</span>
+              <code class="dash-cmd">/react-components</code>
+            </div>
+            <p class="dash-card-desc">Converte designs Stitch em componentes Vite + React modulares com validação AST.</p>
+            <div class="dash-card-when">Quando converter designs para componentes React.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">vercel-react-best-practices</span>
+              <code class="dash-cmd">/vercel-react-best-practices</code>
+            </div>
+            <p class="dash-card-desc">68 regras de otimização React/Next.js: data fetching, bundle, re-renders.</p>
+            <div class="dash-card-when">Quando escrever, revisar ou refatorar código React/Next.js.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">supabase</span>
+              <code class="dash-cmd">/supabase</code>
+            </div>
+            <p class="dash-card-desc">Otimização Postgres e boas práticas: queries, schema, RLS, edge functions.</p>
+            <div class="dash-card-when">Quando escrever ou revisar queries SQL e configurações de banco.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">claude-api</span>
+              <code class="dash-cmd">/claude-api</code>
+            </div>
+            <p class="dash-card-desc">Construir apps com a Claude API ou Anthropic SDK.</p>
+            <div class="dash-card-when">Quando código importa anthropic ou @anthropic-ai/sdk.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">mcp-builder</span>
+              <code class="dash-cmd">/mcp-builder</code>
+            </div>
+            <p class="dash-card-desc">Guia para criar MCP servers de alta qualidade para integrar APIs externas.</p>
+            <div class="dash-card-when">Quando construir MCP servers para serviços externos.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">research-first</span>
+              <code class="dash-cmd">/research-first</code>
+            </div>
+            <p class="dash-card-desc">Workflow guard que pesquisa documentação atual antes de executar com libs externas.</p>
+            <div class="dash-card-when">Automático em toda tarefa com bibliotecas ou APIs externas.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">web-artifacts-builder</span>
+              <code class="dash-cmd">/web-artifacts-builder</code>
+            </div>
+            <p class="dash-card-desc">Suite para criar HTML artifacts multi-componente com React, Tailwind, shadcn/ui.</p>
+            <div class="dash-card-when">Quando criar artifacts complexos para claude.ai.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">webapp-testing</span>
+              <code class="dash-cmd">/webapp-testing</code>
+            </div>
+            <p class="dash-card-desc">Toolkit de teste com Playwright: verificação de frontend, screenshots, logs.</p>
+            <div class="dash-card-when">Quando testar apps web locais no browser.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SEO & Performance ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          SEO & Performance
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">seo-meta-tags</span>
+              <code class="dash-cmd">/seo-meta-tags</code>
+            </div>
+            <p class="dash-card-desc">Otimiza title tags, meta descriptions, Open Graph, Twitter cards para CTR máximo.</p>
+            <div class="dash-card-when">Quando precisar otimizar meta tags para buscadores.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">seo-audit</span>
+              <code class="dash-cmd">/seo-audit</code>
+            </div>
+            <p class="dash-card-desc">Auditoria on-page: títulos, headers, imagens, links com relatório e prioridades.</p>
+            <div class="dash-card-when">Quando auditar o SEO de uma página.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">seo-technical</span>
+              <code class="dash-cmd">/seo-technical</code>
+            </div>
+            <p class="dash-card-desc">Auditoria técnica: Core Web Vitals, crawl, indexação, mobile, velocidade.</p>
+            <div class="dash-card-when">Quando diagnosticar problemas técnicos de SEO.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">lighthouse-audit</span>
+              <code class="dash-cmd">/lighthouse-audit</code>
+            </div>
+            <p class="dash-card-desc">Auditoria de performance web: imagens, fontes, bundle size, métricas.</p>
+            <div class="dash-card-when">Quando analisar performance e Core Web Vitals.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">a11y-audit</span>
+              <code class="dash-cmd">/a11y-audit</code>
+            </div>
+            <p class="dash-card-desc">Auditoria de acessibilidade WCAG 2.2 Level A e AA para qualquer framework.</p>
+            <div class="dash-card-when">Quando auditar ou corrigir acessibilidade.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Writing & Copy ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Escrita & Copy
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">copywriting</span>
+              <code class="dash-cmd">/copywriting</code>
+            </div>
+            <p class="dash-card-desc">Escreve copy de marketing: landing pages, pricing, features. Foco em clareza e CTAs.</p>
+            <div class="dash-card-when">Quando escrever ou melhorar copy de marketing.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">humanizer</span>
+              <code class="dash-cmd">/humanizer</code>
+            </div>
+            <p class="dash-card-desc">Remove padrões de escrita de IA: simbolismo inflado, em dashes, regra de três.</p>
+            <div class="dash-card-when">Quando o texto soar artificial ou "escrito por IA".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">humanize-copy</span>
+              <code class="dash-cmd">/humanize-copy</code>
+            </div>
+            <p class="dash-card-desc">Humanização de texto em português para o projeto Entropia.</p>
+            <div class="dash-card-when">Quando mencionar "humanizar o texto", "tirar cara de IA".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">doc-coauthoring</span>
+              <code class="dash-cmd">/doc-coauthoring</code>
+            </div>
+            <p class="dash-card-desc">Workflow estruturado para co-autoria de documentação, specs e propostas.</p>
+            <div class="dash-card-when">Quando escrever documentação, proposals ou decision docs.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">internal-comms</span>
+              <code class="dash-cmd">/internal-comms</code>
+            </div>
+            <p class="dash-card-desc">Templates para comunicação interna: status reports, updates de liderança.</p>
+            <div class="dash-card-when">Quando escrever comunicações internas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Produtividade & Tempo ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Produtividade & Tempo
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">otimizar-tempo</span>
+              <code class="dash-cmd">/otimizar-tempo</code>
+            </div>
+            <p class="dash-card-desc">Classifica atividades em 4 baldes (Investimentos, Operações, Dívidas, Vazamentos) e aplica matriz de decisão.</p>
+            <div class="dash-card-when">Quando quiser analisar ou otimizar o uso do tempo.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">criar-sistema-tempo</span>
+              <code class="dash-cmd">/criar-sistema-tempo</code>
+            </div>
+            <p class="dash-card-desc">Cria sistema pessoal de gestão de tempo com regras filosóficas e frameworks.</p>
+            <div class="dash-card-when">Quando quiser definir regras de tempo ou criar uma constituição de produtividade.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">estruturar-calendario</span>
+              <code class="dash-cmd">/estruturar-calendario</code>
+            </div>
+            <p class="dash-card-desc">Estrutura calendário semanal com blocos de deep work e alinhamento cronobiológico.</p>
+            <div class="dash-card-when">Quando mencionar "planejar a semana", "blocos de tempo", "deep work".</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Documents & Files ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Documentos & Arquivos
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">pdf</span>
+              <code class="dash-cmd">/pdf</code>
+            </div>
+            <p class="dash-card-desc">Operações PDF: ler, extrair, merge, split, rotate, watermark, OCR, preencher forms.</p>
+            <div class="dash-card-when">Quando trabalhar com arquivos PDF.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">docx</span>
+              <code class="dash-cmd">/docx</code>
+            </div>
+            <p class="dash-card-desc">Cria, lê, edita Word documents com formatação, tabelas, numeração de páginas.</p>
+            <div class="dash-card-when">Quando trabalhar com arquivos .docx.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">xlsx</span>
+              <code class="dash-cmd">/xlsx</code>
+            </div>
+            <p class="dash-card-desc">Cria/edita planilhas com pandas, fórmulas, gráficos, LibreOffice recalculation.</p>
+            <div class="dash-card-when">Quando trabalhar com spreadsheets (.xlsx, .csv).</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">pptx</span>
+              <code class="dash-cmd">/pptx</code>
+            </div>
+            <p class="dash-card-desc">Cria/edita apresentações com design, paletas, QA workflows, conversão para PDF.</p>
+            <div class="dash-card-when">Quando trabalhar com arquivos .pptx.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Image Generation ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Geração de Imagem
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">image-prompter</span>
+              <code class="dash-cmd">/image-prompter</code>
+            </div>
+            <p class="dash-card-desc">Gera prompts otimizados para Imagen 3 (Google AI Studio) para capas do Entropia.</p>
+            <div class="dash-card-when">Quando mencionar "imagem", "capa", "prompt de imagem", "Nano Banana".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">nano-banana</span>
+              <code class="dash-cmd">/nano-banana</code>
+            </div>
+            <p class="dash-card-desc">Gera imagens via Gemini Flash CLI. Multi-resolução (512-4K), green screen, cost tracking.</p>
+            <div class="dash-card-when">Quando gerar imagens direto na CLI com Gemini.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Git & Deploy ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+          Git & Deploy
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">ship</span>
+              <code class="dash-cmd">/ship</code>
+            </div>
+            <p class="dash-card-desc">Gerencia projetos com Git, GitHub, Vercel e Supabase. Salva, sincroniza e deploya com segurança.</p>
+            <div class="dash-card-when">Quando mencionar "salvar projeto", "subir pro github", "sincronizar".</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">git-guide</span>
+              <code class="dash-cmd">/git-guide</code>
+            </div>
+            <p class="dash-card-desc">Guia Git seguro em português para iniciantes. Previne operações destrutivas.</p>
+            <div class="dash-card-when">Quando precisar de ajuda com Git ou operações de repositório.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── System & Workflow ── -->
+      <div class="dash-category">
+        <div class="dash-category-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Sistema & Workflow
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">skill-router</span>
+              <code class="dash-cmd">/skill-router</code>
+            </div>
+            <p class="dash-card-desc">Mapa inteligente de todas as skills. Consulta quando o pedido é ambíguo ou toca múltiplas áreas.</p>
+            <div class="dash-card-when">Quando não souber qual skill usar para o pedido.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">skill-creator</span>
+              <code class="dash-cmd">/skill-creator</code>
+            </div>
+            <p class="dash-card-desc">Cria novas skills, modifica existentes e mede performance com evals.</p>
+            <div class="dash-card-when">Quando criar, modificar ou testar skills.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">simplify</span>
+              <code class="dash-cmd">/simplify</code>
+            </div>
+            <p class="dash-card-desc">Revisa código para reuso, qualidade e eficiência, corrigindo problemas encontrados.</p>
+            <div class="dash-card-when">Quando quiser revisar código recém-escrito.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">update-config</span>
+              <code class="dash-cmd">/update-config</code>
+            </div>
+            <p class="dash-card-desc">Configura o harness do Claude Code via settings.json. Hooks e comportamentos automáticos.</p>
+            <div class="dash-card-when">Quando configurar hooks ou comportamentos automáticos.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">keybindings-help</span>
+              <code class="dash-cmd">/keybindings-help</code>
+            </div>
+            <p class="dash-card-desc">Customiza atalhos de teclado, chord bindings e keybindings.json.</p>
+            <div class="dash-card-when">Quando quiser rebind de teclas ou personalizar atalhos.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">loop</span>
+              <code class="dash-cmd">/loop</code>
+            </div>
+            <p class="dash-card-desc">Roda um prompt ou slash command em intervalo recorrente (default 10min).</p>
+            <div class="dash-card-when">Quando quiser polling, tarefas recorrentes ou monitoramento.</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-head">
+              <span class="dash-card-name">schedule</span>
+              <code class="dash-cmd">/schedule</code>
+            </div>
+            <p class="dash-card-desc">Cria, lista e gerencia agentes remotos agendados via cron.</p>
+            <div class="dash-card-when">Quando agendar tarefas automáticas recorrentes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         AGENTS
+         ==================================================================== -->
+    <div class="dash-section" data-type="agents">
+      <div class="dash-section-header">
+        <div class="dash-section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h2 class="dash-section-title">Agentes <span class="dash-count">12</span></h2>
+      </div>
+      <p class="section-intro">Subagentes especializados que o Claude lança em paralelo para tarefas complexas. Cada um opera com seu próprio contexto e ferramentas.</p>
+
+      <div class="dash-cards dash-cards--agents">
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">calendar-architect</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Engenharia estratégica de calendário: alinhamento cronobiológico, blocos de deep work, mapeamento de ritmo circadiano.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Read</span>
+            <span class="dash-tool-tag">Write</span>
+            <span class="dash-tool-tag">WebSearch</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">time-optimizer</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Otimização semanal de atividades: classifica em 4 baldes e aplica matriz de decisão (Blindar, Delegar, Automatizar, Eliminar).</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Read</span>
+            <span class="dash-tool-tag">Write</span>
+            <span class="dash-tool-tag">WebSearch</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">time-system-architect</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Cria sistema pessoal de gestão de tempo com princípios e regras. Integra Cal Newport, James Clear, Paul Graham, Nassim Taleb.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Read</span>
+            <span class="dash-tool-tag">Write</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">ui-builder</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Gera entregas visuais HTML para Entropia. HTML semântico, CSS custom properties, responsivo com dark mode.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Read</span>
+            <span class="dash-tool-tag">Write</span>
+            <span class="dash-tool-tag">Bash</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">ui-researcher</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Define design system (tokens, paletas, tipografia) para o projeto Entropia baseado em análise estratégica.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Read</span>
+            <span class="dash-tool-tag">Write</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">ui-designer</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Design de mockups e interfaces para módulos do curso Entropia.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Stitch MCP</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">image-prompter</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Gera prompts otimizados para Imagen 3 com estética de desenho técnico e estilo arquitetônico.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">Read</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">dangerously-skip-squad</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Orquestrador de segurança para quando --dangerously-skip-permissions está ativo. Monta squad de proteção por projeto.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">All tools</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">safe-guard</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Check de segurança leve para avaliação rápida de risco (go/no-go) em ações isoladas.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">All tools</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">nextjs-developer</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Expertise em desenvolvimento Next.js. Do awesome-claude-code-subagents.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">All tools</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">product-manager</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Gestão de produto e estratégia. Do awesome-claude-code-subagents.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">All tools</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--agent">
+          <div class="dash-card-head">
+            <span class="dash-card-name">project-idea-validator</span>
+            <span class="dash-agent-model">Sonnet</span>
+          </div>
+          <p class="dash-card-desc">Valida e refina ideias de projeto. Do awesome-claude-code-subagents.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">All tools</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         HOOKS
+         ==================================================================== -->
+    <div class="dash-section" data-type="hooks">
+      <div class="dash-section-header">
+        <div class="dash-section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h2 class="dash-section-title">Hooks <span class="dash-count">1</span></h2>
+      </div>
+      <p class="section-intro">Comandos que rodam automaticamente antes ou depois de ações do Claude. Funcionam como guardrails de segurança.</p>
+
+      <div class="dash-cards">
+        <div class="dash-card dash-card--hook">
+          <div class="dash-card-head">
+            <span class="dash-card-name">dangerous-command-guard</span>
+            <span class="dash-hook-event">PreToolUse</span>
+          </div>
+          <p class="dash-card-desc">Intercepta comandos Bash antes da execução e bloqueia operações destrutivas.</p>
+          <div class="dash-hook-rules">
+            <div class="dash-hook-rule dash-hook-rule--block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <code>rm -rf</code>
+            </div>
+            <div class="dash-hook-rule dash-hook-rule--block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <code>git reset --hard</code>
+            </div>
+            <div class="dash-hook-rule dash-hook-rule--block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <code>git push --force</code>
+            </div>
+            <div class="dash-hook-rule dash-hook-rule--block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <code>git branch -D</code>
+            </div>
+            <div class="dash-hook-rule dash-hook-rule--block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <code>git clean -f</code>
+            </div>
+            <div class="dash-hook-rule dash-hook-rule--block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <code>git checkout .</code>
+            </div>
+            <div class="dash-hook-rule dash-hook-rule--warn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <code>npm uninstall -g</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         MCPs
+         ==================================================================== -->
+    <div class="dash-section" data-type="mcps">
+      <div class="dash-section-header">
+        <div class="dash-section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h2 class="dash-section-title">MCP Servers <span class="dash-count">4</span></h2>
+      </div>
+      <p class="section-intro">Pontes que conectam o Claude a serviços externos. Sem elas, o Claude só acessa seu computador local.</p>
+
+      <div class="dash-cards dash-cards--mcps">
+        <div class="dash-card dash-card--mcp">
+          <div class="dash-card-head">
+            <span class="dash-card-name">Playwright</span>
+            <span class="dash-mcp-status dash-mcp-status--active">ativo</span>
+          </div>
+          <p class="dash-card-desc">Automação de browser: navegar, clicar, screenshots, console, forms, uploads, teclado.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">navigate</span>
+            <span class="dash-tool-tag">screenshot</span>
+            <span class="dash-tool-tag">click</span>
+            <span class="dash-tool-tag">fill_form</span>
+            <span class="dash-tool-tag">evaluate</span>
+            <span class="dash-tool-tag">console</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--mcp">
+          <div class="dash-card-head">
+            <span class="dash-card-name">Stitch Design</span>
+            <span class="dash-mcp-status dash-mcp-status--active">ativo</span>
+          </div>
+          <p class="dash-card-desc">Geração e edição de telas de design. Cria projetos, lista screens, gera a partir de texto.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">list_projects</span>
+            <span class="dash-tool-tag">generate_screen</span>
+            <span class="dash-tool-tag">edit_screens</span>
+            <span class="dash-tool-tag">get_screen</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--mcp">
+          <div class="dash-card-head">
+            <span class="dash-card-name">Gmail</span>
+            <span class="dash-mcp-status dash-mcp-status--auth">requer auth</span>
+          </div>
+          <p class="dash-card-desc">Leitura e envio de e-mails via conta Google. Requer autenticação OAuth.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">authenticate</span>
+          </div>
+        </div>
+        <div class="dash-card dash-card--mcp">
+          <div class="dash-card-head">
+            <span class="dash-card-name">Google Calendar</span>
+            <span class="dash-mcp-status dash-mcp-status--auth">requer auth</span>
+          </div>
+          <p class="dash-card-desc">Acesso a eventos, agenda e calendários do Google. Requer autenticação OAuth.</p>
+          <div class="dash-agent-tools">
+            <span class="dash-tool-tag">authenticate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 64px;">
+      <strong>Como usar</strong>
+      Para acionar uma skill, digite o slash command (ex: <code>/ship</code>) direto no chat do Claude Code. Agentes são acionados automaticamente pelo Claude quando a tarefa exige. Hooks rodam sozinhos antes de ações perigosas.
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/ferramentas.html" class="btn btn-ghost">← Ferramentas</a>
+      <a href="/" class="btn btn-primary">Voltar ao início →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('dashboard');</script>
+<script>
+// ── Dashboard interactivity ──
+(function() {
+  // Category filter
+  const filters = document.querySelectorAll('.dash-filter');
+  const sections = document.querySelectorAll('.dash-section');
+
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filters.forEach(f => f.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+
+      sections.forEach(sec => {
+        if (filter === 'all' || sec.dataset.type === filter) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Search
+  const searchInput = document.getElementById('dash-search-input');
+  searchInput.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.dash-card');
+    const categories = document.querySelectorAll('.dash-category');
+
+    // Reset filter to "all"
+    if (q) {
+      filters.forEach(f => f.classList.remove('active'));
+      filters[0].classList.add('active');
+      sections.forEach(s => s.style.display = '');
+    }
+
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = q === '' || text.includes(q) ? '' : 'none';
+    });
+
+    // Hide empty categories
+    categories.forEach(cat => {
+      const visibleCards = cat.querySelectorAll('.dash-card:not([style*="display: none"])');
+      cat.style.display = visibleCards.length === 0 && q !== '' ? 'none' : '';
+    });
+
+    // Hide empty sections
+    sections.forEach(sec => {
+      const visibleCards = sec.querySelectorAll('.dash-card:not([style*="display: none"])');
+      sec.style.display = visibleCards.length === 0 && q !== '' ? 'none' : '';
+    });
+  });
+})();
+</script>
+</body>
+</html>
