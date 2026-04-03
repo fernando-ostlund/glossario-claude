@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comandos — Glossário Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Comandos</div>
+    <div class="section-label">Referência rápida</div>
+    <h1 class="page-title">Comandos que você vê</h1>
+    <p class="page-desc">Os comandos mais comuns que aparecem quando o Claude Code trabalha.</p>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="term-name">ls</div>
+        <div class="term-def">Lista o que tem dentro de uma pasta. Como abrir uma pasta no Finder.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">cd</div>
+        <div class="term-def">Muda para outra pasta. <code>cd ~/Desktop</code> vai para o Desktop. Como clicar duas vezes numa pasta.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">mkdir</div>
+        <div class="term-def">Cria uma pasta nova. <code>mkdir meu-projeto</code> cria a pasta "meu-projeto".</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">cp / mv</div>
+        <div class="term-def"><strong>cp</strong> = copiar. <strong>mv</strong> = mover (ou renomear). Funcionam como arrastar no Finder.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">rm</div>
+        <div class="term-def">Remove (deleta) arquivo ou pasta. Cuidado: não vai para a lixeira. Seu hook <code>dangerous-command-guard</code> te protege contra <code>rm -rf</code> acidental.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">cat</div>
+        <div class="term-def">Mostra o conteúdo de um arquivo no terminal. <code>cat package.json</code> imprime o arquivo inteiro na tela.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">npm install</div>
+        <div class="term-def">Instala todas as bibliotecas que o projeto precisa. É a primeira coisa que você roda quando clona um projeto.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">npm run dev</div>
+        <div class="term-def">Liga o servidor de desenvolvimento. Seu site fica acessível em <code>localhost:3000</code> (só no seu computador).</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">npm run build</div>
+        <div class="term-def">Prepara o projeto para publicação. Otimiza o código, comprime arquivos. É o passo antes do deploy.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">git status</div>
+        <div class="term-def">Mostra o que mudou no projeto desde o último commit. Sempre rode antes de salvar. É o "olhar antes de atravessar a rua".</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">git add</div>
+        <div class="term-def">Seleciona quais arquivos vão entrar no próximo commit. <code>git add arquivo.tsx</code> seleciona um arquivo específico.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">git commit</div>
+        <div class="term-def">Salva a "foto" do projeto. Sempre com mensagem: <code>git commit -m "o que mudei"</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">git push</div>
+        <div class="term-def">Envia seus commits para o GitHub. Faça no final do dia — é seu backup na nuvem.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">git pull</div>
+        <div class="term-def">Baixa mudanças do GitHub para o seu computador. Rode no início do dia para sincronizar.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">git clone</div>
+        <div class="term-def">Baixa um projeto inteiro do GitHub para o seu computador pela primeira vez. <code>git clone URL</code>.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Sequência do dia a dia</strong>
+      <code>git pull</code> → trabalhar → <code>git status</code> → <code>git add</code> → <code>git commit</code> → <code>git push</code>. Essa é a rotina segura.
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/arquivos.html" class="btn btn-ghost">← Arquivos</a>
+      <a href="/" class="btn btn-primary">Voltar ao início →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('comandos');</script>
+</body>
+</html>

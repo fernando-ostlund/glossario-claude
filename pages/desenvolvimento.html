@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desenvolvimento — Glossário Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Desenvolvimento</div>
+    <div class="section-label">Programação</div>
+    <h1 class="page-title">Termos de desenvolvimento</h1>
+    <p class="page-desc">Conceitos de programação que aparecem no seu dia a dia com Claude Code.</p>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="term-name">Repositório</div>
+        <div class="term-def">Uma pasta de projeto com histórico completo de todas as mudanças. Fica no GitHub. Como um Google Drive que guarda cada versão de cada arquivo.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Git</div>
+        <div class="term-def">O sistema que controla as versões do seu projeto. Cada "foto" do projeto é um commit. Git é local (seu computador), GitHub é na nuvem.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Commit</div>
+        <div class="term-def">Salvar uma "foto" do estado atual do projeto com uma mensagem descrevendo o que mudou. Exemplo: <code>git commit -m "ajustei o header"</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Push / Pull</div>
+        <div class="term-def"><strong>Push</strong> = enviar suas mudanças para o GitHub (backup na nuvem). <strong>Pull</strong> = baixar mudanças do GitHub para o seu computador.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Branch</div>
+        <div class="term-def">Uma cópia paralela do projeto para experimentar sem estragar o original. Quando funciona, você junta (merge) de volta.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Deploy</div>
+        <div class="term-def">Publicar seu projeto na internet. Quando você dá push para o GitHub e a Vercel publica automaticamente — isso é deploy.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">API</div>
+        <div class="term-def">Uma ponte de comunicação entre dois sistemas. Quando o Claude busca dados do Supabase, ele usa a API do Supabase. Como um garçom levando pedidos entre você e a cozinha.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Framework</div>
+        <div class="term-def">Um conjunto de ferramentas prontas para construir algo. Next.js é um framework para sites, Remotion para vídeos. É como usar LEGO ao invés de moldar cada peça.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Biblioteca</div>
+        <div class="term-def">Código pronto que alguém criou para você não ter que fazer do zero. Framer Motion é uma biblioteca de animações. python-pptx é uma de PowerPoint.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Dependência</div>
+        <div class="term-def">Uma biblioteca que seu projeto precisa para funcionar. Quando você roda <code>npm install</code>, está instalando as dependências.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">npm / bun / pip</div>
+        <div class="term-def">Gerenciadores de pacotes — apps que instalam bibliotecas. <strong>npm</strong> e <strong>bun</strong> são para JavaScript, <strong>pip</strong> é para Python. Como uma App Store para código.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">package.json</div>
+        <div class="term-def">A "lista de compras" do projeto. Diz quais bibliotecas são necessárias e em qual versão. Fica na raiz de todo projeto JavaScript.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">localhost</div>
+        <div class="term-def">O endereço do seu computador. Quando roda <code>npm run dev</code>, o site fica em <code>localhost:3000</code> — visível só para você, não está na internet.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/ferramentas.html" class="btn btn-ghost">← Ferramentas</a>
+      <a href="/pages/arquivos.html" class="btn btn-primary">Próximo: Arquivos →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('desenvolvimento');</script>
+</body>
+</html>

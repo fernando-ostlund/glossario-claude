@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquivos — Glossário Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Arquivos</div>
+    <div class="section-label">Organização</div>
+    <h1 class="page-title">Arquivos e estrutura</h1>
+    <p class="page-desc">Tipos de arquivo e conceitos de organização que você encontra nos projetos.</p>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="term-name">.md</div>
+        <div class="term-def">Markdown. Formato de texto simples com formatação (negrito, títulos, listas). Todas as suas skills são arquivos <code>.md</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">.tsx / .jsx</div>
+        <div class="term-def">Arquivos de componentes React. O <code>.tsx</code> é com TypeScript (mais seguro), <code>.jsx</code> é JavaScript puro. É onde a interface do site vive.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">.env</div>
+        <div class="term-def">Arquivo de segredos (senhas, chaves de API). Nunca deve ir para o GitHub. Sua chave do Gemini está em um <code>.env</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">.json</div>
+        <div class="term-def">Formato de dados estruturados. Pense como uma planilha, mas em texto. Configurações, dados, listas — tudo pode ser JSON.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">node_modules</div>
+        <div class="term-def">A pasta onde ficam todas as bibliotecas instaladas. É enorme e nunca vai para o GitHub. O <code>npm install</code> recria ela a partir do <code>package.json</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Diretório / Pasta</div>
+        <div class="term-def">Mesma coisa. "Diretório" é o termo técnico para "pasta". <code>~/</code> significa sua pasta pessoal.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Path / Caminho</div>
+        <div class="term-def">O endereço completo de um arquivo. Exemplo: <code>/Users/fernandoostlund/.claude/skills/</code>. A <code>/</code> separa as pastas.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">.gitignore</div>
+        <div class="term-def">Arquivo que lista o que o Git deve ignorar. Exemplo: <code>node_modules/</code>, <code>.env</code>, <code>.DS_Store</code>. Evita enviar lixo para o GitHub.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/desenvolvimento.html" class="btn btn-ghost">← Desenvolvimento</a>
+      <a href="/pages/comandos.html" class="btn btn-primary">Próximo: Comandos →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('arquivos');</script>
+</body>
+</html>

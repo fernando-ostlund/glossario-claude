@@ -1,0 +1,16 @@
+.env
+.env.local
+.env.production
+node_modules/
+__pycache__/
+venv/
+.venv/
+*.pyc
+.next/
+dist/
+build/
+.vercel/
+.supabase/
+*.sqlite
+*.db
+.DS_Store

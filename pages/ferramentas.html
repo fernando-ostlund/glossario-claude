@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas — Glossário Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Ferramentas</div>
+    <div class="section-label">Ecossistema</div>
+    <h1 class="page-title">Ferramentas do Claude Code</h1>
+    <p class="page-desc">As peças que fazem o Claude Code funcionar.</p>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="term-name">Skill</div>
+        <div class="term-def">Um arquivo com instruções especializadas que o Claude segue quando uma tarefa específica aparece. Você tem 46. É como dar um manual para o Claude sobre um assunto.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Agent</div>
+        <div class="term-def">Um "assistente do assistente". O Claude pode criar agentes especializados para fazer tarefas em paralelo enquanto continua conversando com você.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Subagent</div>
+        <div class="term-def">Um agente criado por outro agente. O Claude principal pode lançar vários subagentes ao mesmo tempo — cada um trabalhando numa parte diferente.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">MCP Server</div>
+        <div class="term-def">Model Context Protocol. Uma ponte que conecta o Claude a serviços externos (Supabase, Vercel, Gmail). Sem MCP, o Claude só acessa seu computador local.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Hook</div>
+        <div class="term-def">Um comando que roda automaticamente antes ou depois de uma ação. Exemplo: seu <code>dangerous-command-guard</code> bloqueia comandos perigosos antes de executar.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Tool</div>
+        <div class="term-def">Uma ferramenta que o Claude pode usar: ler arquivo (Read), editar (Edit), rodar comando (Bash), buscar na web (WebSearch). Cada ação é uma "tool".</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Plugin</div>
+        <div class="term-def">Um pacote externo que adiciona funcionalidades ao Claude Code. Skills e hooks podem vir dentro de plugins. O skill-creator é um plugin.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">CLAUDE.md</div>
+        <div class="term-def">Um arquivo de instruções que o Claude lê automaticamente quando abre um projeto. Como um briefing: "neste projeto, faça X e Y, nunca faça Z".</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Memory</div>
+        <div class="term-def">Informações que o Claude guarda entre conversas. Seu perfil, preferências, projetos em andamento. Fica em <code>~/.claude/memory/</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Worktree</div>
+        <div class="term-def">Uma cópia isolada do repositório onde um agente pode trabalhar sem afetar seus arquivos. Como uma mesa de trabalho temporária que se limpa sozinha.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/basicos.html" class="btn btn-ghost">← Básicos</a>
+      <a href="/pages/desenvolvimento.html" class="btn btn-primary">Próximo: Desenvolvimento →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('ferramentas');</script>
+</body>
+</html>
