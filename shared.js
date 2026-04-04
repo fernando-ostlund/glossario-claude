@@ -137,9 +137,26 @@ function renderClaudinho() {
   `;
   document.body.appendChild(container);
 
-  // ── Position state ──
-  let posX = window.innerWidth - 108;
-  let posY = window.innerHeight - 104;
+  // ── Position state — Claudinho fica SEMPRE no canto inferior direito ──
+  // Area de dodge: 200px de largura x 150px de altura no canto inferior direito
+  const CORNER_PADDING = 12;
+  const DODGE_AREA_W = 200;
+  const DODGE_AREA_H = 150;
+
+  function getCornerBounds() {
+    const w = container.offsetWidth;
+    const h = container.offsetHeight;
+    return {
+      minX: window.innerWidth - DODGE_AREA_W - CORNER_PADDING,
+      maxX: window.innerWidth - w - CORNER_PADDING,
+      minY: window.innerHeight - DODGE_AREA_H - CORNER_PADDING,
+      maxY: window.innerHeight - h - CORNER_PADDING,
+    };
+  }
+
+  let bounds = getCornerBounds();
+  let posX = bounds.maxX;
+  let posY = bounds.maxY;
   container.style.position = 'fixed';
   container.style.bottom = 'auto';
   container.style.right = 'auto';
@@ -156,9 +173,8 @@ function renderClaudinho() {
   setInterval(doBlink, 20000);
   setTimeout(doBlink, 3000);
 
-  // ── Cursor dodge system ──
-  const DODGE_RADIUS = 120;
-  const DODGE_SPEED = 0.35;
+  // ── Cursor dodge system — contido no canto inferior direito ──
+  const DODGE_RADIUS = 100;
   let mouseX = -1000, mouseY = -1000;
   let chaseStartTime = 0;
   let isChasing = false;
@@ -183,19 +199,15 @@ function renderClaudinho() {
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < DODGE_RADIUS && dist > 0) {
-      // Mouse is close — dodge!
       const angle = Math.atan2(dy, dx);
       const force = (DODGE_RADIUS - dist) / DODGE_RADIUS;
-      const moveX = Math.cos(angle) * force * 30;
-      const moveY = Math.sin(angle) * force * 30;
+      const moveX = Math.cos(angle) * force * 25;
+      const moveY = Math.sin(angle) * force * 25;
 
-      const w = container.offsetWidth;
-      const h = container.offsetHeight;
-      const maxX = window.innerWidth - w - 8;
-      const maxY = window.innerHeight - h - 8;
-
-      posX = Math.max(8, Math.min(maxX, posX + moveX));
-      posY = Math.max(8, Math.min(maxY, posY + moveY));
+      // Clamp to corner bounds
+      bounds = getCornerBounds();
+      posX = Math.max(bounds.minX, Math.min(bounds.maxX, posX + moveX));
+      posY = Math.max(bounds.minY, Math.min(bounds.maxY, posY + moveY));
 
       container.style.left = posX + 'px';
       container.style.top = posY + 'px';
@@ -213,13 +225,21 @@ function renderClaudinho() {
         }, 500);
       }
     } else {
-      // Mouse far away — reset chase
+      // Mouse far away — reset chase, slowly drift back to home position
       if (isChasing) {
         isChasing = false;
         chaseStartTime = 0;
         if (chaseTimer) clearInterval(chaseTimer);
         chaseTimer = null;
       }
+      // Gently return to default corner position
+      bounds = getCornerBounds();
+      const homeX = bounds.maxX;
+      const homeY = bounds.maxY;
+      posX += (homeX - posX) * 0.03;
+      posY += (homeY - posY) * 0.03;
+      container.style.left = posX + 'px';
+      container.style.top = posY + 'px';
     }
 
     requestAnimationFrame(dodgeLoop);
@@ -303,10 +323,9 @@ function renderClaudinho() {
 
   // ── Resize handler ──
   window.addEventListener('resize', () => {
-    const w = container.offsetWidth;
-    const h = container.offsetHeight;
-    posX = Math.min(posX, window.innerWidth - w - 8);
-    posY = Math.min(posY, window.innerHeight - h - 8);
+    bounds = getCornerBounds();
+    posX = Math.max(bounds.minX, Math.min(bounds.maxX, posX));
+    posY = Math.max(bounds.minY, Math.min(bounds.maxY, posY));
     container.style.left = posX + 'px';
     container.style.top = posY + 'px';
   });

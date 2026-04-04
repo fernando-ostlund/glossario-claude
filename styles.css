@@ -1039,3 +1039,89 @@ a.course-row { text-decoration: none; color: inherit; }
   margin-top: 12px;
   letter-spacing: 0.05em;
 }
+
+/* =========== SETUP DETAIL PAGES =========== */
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  transition: color 0.15s;
+}
+
+.detail-back:hover { color: var(--accent); }
+
+.detail-badge {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.detail-badge--skill { background: rgba(217,119,87,0.12); color: var(--accent); }
+.detail-badge--agent { background: rgba(99,140,210,0.12); color: #638cd2; }
+.detail-badge--hook { background: rgba(76,175,80,0.12); color: #4caf50; }
+.detail-badge--mcp { background: rgba(156,100,210,0.12); color: #9c64d2; }
+
+[data-theme="dark"] .detail-badge--skill { background: rgba(224,138,109,0.15); color: #e08a6d; }
+[data-theme="dark"] .detail-badge--agent { background: rgba(99,140,210,0.15); color: #7ea3e0; }
+[data-theme="dark"] .detail-badge--hook { background: rgba(76,175,80,0.15); color: #66bb6a; }
+[data-theme="dark"] .detail-badge--mcp { background: rgba(156,100,210,0.15); color: #b388e0; }
+
+.detail-cmd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  background: var(--bg-code);
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: var(--accent);
+  display: inline-block;
+  margin-bottom: 32px;
+}
+
+.detail-section {
+  margin-bottom: 48px;
+  max-width: 680px;
+}
+
+.detail-section h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 12px;
+}
+
+.detail-section p, .detail-section li {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.detail-section ul {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.detail-section li {
+  margin-bottom: 6px;
+}
+
+.detail-example {
+  background: var(--bg-code);
+  border-radius: 10px;
+  padding: 20px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: auto;
+  margin-top: 12px;
+}
