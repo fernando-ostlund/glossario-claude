@@ -14,60 +14,108 @@
     <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Desenvolvimento</div>
     <div class="section-label">Programação</div>
     <h1 class="page-title">Termos de desenvolvimento</h1>
-    <p class="page-desc">Conceitos de programação que aparecem no seu dia a dia com Claude Code.</p>
+    <p class="page-desc">Conceitos de programacao que aparecem no seu dia a dia com Claude Code.</p>
 
     <div class="terms">
       <div class="term-row">
         <div class="term-name">Repositório</div>
-        <div class="term-def">Uma pasta de projeto com histórico completo de todas as mudanças. Fica no GitHub. Como um Google Drive que guarda cada versão de cada arquivo.</div>
+        <div class="term-def">Uma pasta de projeto com historico completo de todas as mudancas. Fica no GitHub. Tipo um Google Drive que guarda cada versao de cada arquivo.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Git</div>
-        <div class="term-def">O sistema que controla as versões do seu projeto. Cada "foto" do projeto é um commit. Git é local (seu computador), GitHub é na nuvem.</div>
+        <div class="term-def">O sistema que controla as versoes do seu projeto. Cada "foto" do projeto e um commit. Git e local (seu computador), GitHub e na nuvem.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Commit</div>
-        <div class="term-def">Salvar uma "foto" do estado atual do projeto com uma mensagem descrevendo o que mudou. Exemplo: <code>git commit -m "ajustei o header"</code>.</div>
+        <div class="term-def">Salvar uma "foto" do estado atual do projeto com uma mensagem dizendo o que mudou. Exemplo: <code>git commit -m "ajustei o header"</code>.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Push / Pull</div>
-        <div class="term-def"><strong>Push</strong> = enviar suas mudanças para o GitHub (backup na nuvem). <strong>Pull</strong> = baixar mudanças do GitHub para o seu computador.</div>
+        <div class="term-def"><strong>Push</strong> = enviar suas mudancas pro GitHub (backup na nuvem). <strong>Pull</strong> = baixar mudancas do GitHub pro seu computador.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Branch</div>
-        <div class="term-def">Uma cópia paralela do projeto para experimentar sem estragar o original. Quando funciona, você junta (merge) de volta.</div>
+        <div class="term-def">Uma copia paralela do projeto pra experimentar sem estragar o original. Quando funciona, voce junta (merge) de volta.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Deploy</div>
-        <div class="term-def">Publicar seu projeto na internet. Quando você dá push para o GitHub e a Vercel publica automaticamente — isso é deploy.</div>
+        <div class="term-def">Publicar seu projeto na internet. Voce da push pro GitHub e a Vercel publica automaticamente. Isso e deploy.</div>
       </div>
       <div class="term-row">
         <div class="term-name">API</div>
-        <div class="term-def">Uma ponte de comunicação entre dois sistemas. Quando o Claude busca dados do Supabase, ele usa a API do Supabase. Como um garçom levando pedidos entre você e a cozinha.</div>
+        <div class="term-def">Uma ponte de comunicacao entre dois sistemas. Quando o Claude busca dados do Supabase, ele usa a API do Supabase. Tipo um garcom levando pedidos entre voce e a cozinha.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Framework</div>
-        <div class="term-def">Um conjunto de ferramentas prontas para construir algo. Next.js é um framework para sites, Remotion para vídeos. É como usar LEGO ao invés de moldar cada peça.</div>
+        <div class="term-def">Um conjunto de ferramentas prontas pra construir algo. Next.js e um framework pra sites, Remotion pra videos. Tipo usar LEGO ao inves de moldar cada peca.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Biblioteca</div>
-        <div class="term-def">Código pronto que alguém criou para você não ter que fazer do zero. Framer Motion é uma biblioteca de animações. python-pptx é uma de PowerPoint.</div>
+        <div class="term-def">Codigo pronto que alguem criou pra voce nao ter que fazer do zero. Framer Motion e uma biblioteca de animacoes. python-pptx e uma de PowerPoint.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Dependência</div>
-        <div class="term-def">Uma biblioteca que seu projeto precisa para funcionar. Quando você roda <code>npm install</code>, está instalando as dependências.</div>
+        <div class="term-def">Uma biblioteca que seu projeto precisa pra funcionar. Quando voce roda <code>npm install</code>, ta instalando as dependencias.</div>
       </div>
       <div class="term-row">
         <div class="term-name">npm / bun / pip</div>
-        <div class="term-def">Gerenciadores de pacotes — apps que instalam bibliotecas. <strong>npm</strong> e <strong>bun</strong> são para JavaScript, <strong>pip</strong> é para Python. Como uma App Store para código.</div>
+        <div class="term-def">Gerenciadores de pacotes. Apps que instalam bibliotecas. <strong>npm</strong> e <strong>bun</strong> sao pra JavaScript, <strong>pip</strong> e pra Python. Tipo uma App Store pra codigo.</div>
       </div>
       <div class="term-row">
         <div class="term-name">package.json</div>
-        <div class="term-def">A "lista de compras" do projeto. Diz quais bibliotecas são necessárias e em qual versão. Fica na raiz de todo projeto JavaScript.</div>
+        <div class="term-def">A "lista de compras" do projeto. Diz quais bibliotecas sao necessarias e em qual versao. Fica na raiz de todo projeto JavaScript.</div>
       </div>
       <div class="term-row">
         <div class="term-name">localhost</div>
-        <div class="term-def">O endereço do seu computador. Quando roda <code>npm run dev</code>, o site fica em <code>localhost:3000</code> — visível só para você, não está na internet.</div>
+        <div class="term-def">O endereco do seu computador. Quando roda <code>npm run dev</code>, o site fica em <code>localhost:3000</code>. Visivel so pra voce, nao ta na internet.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Variavel de Ambiente</div>
+        <div class="term-def">Um valor secreto guardado fora do codigo, tipo senhas e chaves de API. Fica no arquivo <code>.env</code> e nunca vai pro GitHub.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Porta</div>
+        <div class="term-def">Numero que identifica qual servico ta rodando. Quando voce acessa <code>localhost:3000</code>, o 3000 e a porta. Tipo o numero do apartamento num predio.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Servidor</div>
+        <div class="term-def">Computador que fica esperando pedidos e mandando respostas. A Vercel roda seus sites em servidores.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Cliente</div>
+        <div class="term-def">O lado que faz o pedido. Seu navegador e um cliente. Quando voce abre um site, o navegador pede e o servidor responde.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Endpoint</div>
+        <div class="term-def">Endereco especifico de uma API. Tipo o balcao certo numa loja. Cada endpoint faz uma coisa diferente.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">REST</div>
+        <div class="term-def">Padrao pra APIs que usa URLs e verbos como GET (pegar dados) e POST (enviar dados). A maioria das APIs que voce encontra e REST.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Webhook</div>
+        <div class="term-def">Um aviso automatico que um servico manda pra outro quando algo acontece. Tipo a Vercel avisando que o deploy terminou.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Middleware</div>
+        <div class="term-def">Codigo que roda no meio do caminho entre o pedido e a resposta. Tipo um seguranca que checa o convite antes de deixar entrar.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">CI/CD</div>
+        <div class="term-def">Automacao que testa e publica seu codigo toda vez que voce faz push. A Vercel faz o CD (deploy automatico) pra voce.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Docker</div>
+        <div class="term-def">Empacota seu projeto com tudo que precisa pra rodar em qualquer lugar. Voce provavelmente nao vai usar agora, mas vai ver o nome por ai.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Runtime</div>
+        <div class="term-def">O momento em que o codigo ta rodando de verdade. "Erro de runtime" significa que quebrou na hora de executar, nao na hora de escrever.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Compilar</div>
+        <div class="term-def">Transformar codigo que humanos entendem em algo que a maquina consegue rodar. TypeScript compila pra JavaScript, por exemplo.</div>
       </div>
     </div>
 

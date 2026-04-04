@@ -14,7 +14,7 @@
     <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Meu Setup</div>
     <div class="section-label">Painel de controle</div>
     <h1 class="page-title">Meu Setup</h1>
-    <p class="page-desc">Tudo que está instalado na sua CLI. Skills, agentes, hooks e conexões externas — o que cada um faz e como acionar.</p>
+    <p class="page-desc">Tudo que ta instalado na sua CLI. Skills, agentes, hooks e conexoes externas. O que cada um faz e como acionar.</p>
 
     <!-- ========== STATS ========== -->
     <div class="dash-stats">
@@ -75,7 +75,7 @@
         </div>
         <h2 class="dash-section-title">Skills <span class="dash-count">48</span></h2>
       </div>
-      <p class="section-intro">Instruções especializadas que o Claude segue automaticamente quando reconhece o contexto, ou que você aciona com <code>/comando</code>.</p>
+      <p class="section-intro">Instrucoes especializadas que o Claude segue sozinho quando reconhece o contexto, ou que voce aciona com <code>/comando</code>.</p>
 
       <!-- ── Design & UI ── -->
       <div class="dash-category">
@@ -801,7 +801,7 @@
         </div>
         <h2 class="dash-section-title">MCP Servers <span class="dash-count">4</span></h2>
       </div>
-      <p class="section-intro">Pontes que conectam o Claude a serviços externos. Sem elas, o Claude só acessa seu computador local.</p>
+      <p class="section-intro">Pontes que conectam o Claude a servicos externos. Sem elas, o Claude so acessa seu computador local.</p>
 
       <div class="dash-cards dash-cards--mcps">
         <div class="dash-card dash-card--mcp">
@@ -857,7 +857,7 @@
 
     <div class="callout" style="margin-top: 64px;">
       <strong>Como usar</strong>
-      Para acionar uma skill, digite o slash command (ex: <code>/ship</code>) direto no chat do Claude Code. Agentes são acionados automaticamente pelo Claude quando a tarefa exige. Hooks rodam sozinhos antes de ações perigosas.
+      Pra acionar uma skill, digita o slash command (tipo <code>/ship</code>) direto no chat do Claude Code. Agentes o Claude aciona sozinho quando a tarefa exige. Hooks rodam automaticamente antes de acoes perigosas.
     </div>
 
     <div style="display: flex; gap: 12px; margin-top: 48px;">
@@ -871,57 +871,57 @@
 <script>
 // ── Dashboard interactivity ──
 (function() {
-  // Category filter
   const filters = document.querySelectorAll('.dash-filter');
   const sections = document.querySelectorAll('.dash-section');
+  const cards = document.querySelectorAll('.dash-card');
+  const categories = document.querySelectorAll('.dash-category');
 
+  // Category filter
   filters.forEach(btn => {
     btn.addEventListener('click', () => {
       filters.forEach(f => f.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
-
       sections.forEach(sec => {
-        if (filter === 'all' || sec.dataset.type === filter) {
-          sec.style.display = '';
-        } else {
-          sec.style.display = 'none';
-        }
+        sec.style.display = (filter === 'all' || sec.dataset.type === filter) ? '' : 'none';
       });
     });
   });
 
-  // Search
+  // Search — uses class instead of fragile style attribute selectors
   const searchInput = document.getElementById('dash-search-input');
-  searchInput.addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.dash-card');
-    const categories = document.querySelectorAll('.dash-category');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
 
-    // Reset filter to "all"
-    if (q) {
-      filters.forEach(f => f.classList.remove('active'));
-      filters[0].classList.add('active');
-      sections.forEach(s => s.style.display = '');
-    }
+      // Reset filter to "all" when searching
+      if (q) {
+        filters.forEach(f => f.classList.remove('active'));
+        filters[0].classList.add('active');
+        sections.forEach(s => s.style.display = '');
+      }
 
-    cards.forEach(card => {
-      const text = card.textContent.toLowerCase();
-      card.style.display = q === '' || text.includes(q) ? '' : 'none';
+      cards.forEach(card => {
+        const match = q === '' || card.textContent.toLowerCase().includes(q);
+        card.classList.toggle('hidden-by-search', !match);
+        card.style.display = match ? '' : 'none';
+      });
+
+      categories.forEach(cat => {
+        const hasVisible = cat.querySelector('.dash-card:not(.hidden-by-search)');
+        cat.style.display = (!hasVisible && q !== '') ? 'none' : '';
+      });
+
+      sections.forEach(sec => {
+        const hasVisible = sec.querySelector('.dash-card:not(.hidden-by-search)');
+        sec.style.display = (!hasVisible && q !== '') ? 'none' : '';
+      });
+
+      // Add transition to sections/categories
+      sections.forEach(s => s.style.transition = 'opacity 0.2s ease');
+      categories.forEach(c => c.style.transition = 'opacity 0.2s ease');
     });
-
-    // Hide empty categories
-    categories.forEach(cat => {
-      const visibleCards = cat.querySelectorAll('.dash-card:not([style*="display: none"])');
-      cat.style.display = visibleCards.length === 0 && q !== '' ? 'none' : '';
-    });
-
-    // Hide empty sections
-    sections.forEach(sec => {
-      const visibleCards = sec.querySelectorAll('.dash-card:not([style*="display: none"])');
-      sec.style.display = visibleCards.length === 0 && q !== '' ? 'none' : '';
-    });
-  });
+  }
 })();
 </script>
 </body>

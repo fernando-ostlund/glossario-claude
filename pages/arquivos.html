@@ -14,32 +14,32 @@
     <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Arquivos</div>
     <div class="section-label">Organização</div>
     <h1 class="page-title">Arquivos e estrutura</h1>
-    <p class="page-desc">Tipos de arquivo e conceitos de organização que você encontra nos projetos.</p>
+    <p class="page-desc">Tipos de arquivo e conceitos de organizacao que voce encontra nos projetos.</p>
 
     <div class="terms">
       <div class="term-row">
         <div class="term-name">.md</div>
-        <div class="term-def">Markdown. Formato de texto simples com formatação (negrito, títulos, listas). Todas as suas skills são arquivos <code>.md</code>.</div>
+        <div class="term-def">Markdown. Formato de texto simples com formatacao (negrito, titulos, listas). Todas as suas skills sao arquivos <code>.md</code>.</div>
       </div>
       <div class="term-row">
         <div class="term-name">.tsx / .jsx</div>
-        <div class="term-def">Arquivos de componentes React. O <code>.tsx</code> é com TypeScript (mais seguro), <code>.jsx</code> é JavaScript puro. É onde a interface do site vive.</div>
+        <div class="term-def">Arquivos de componentes React. O <code>.tsx</code> e com TypeScript (mais seguro), <code>.jsx</code> e JavaScript puro. E onde a interface do site vive.</div>
       </div>
       <div class="term-row">
         <div class="term-name">.env</div>
-        <div class="term-def">Arquivo de segredos (senhas, chaves de API). Nunca deve ir para o GitHub. Sua chave do Gemini está em um <code>.env</code>.</div>
+        <div class="term-def">Arquivo de segredos (senhas, chaves de API). Nunca deve ir pro GitHub. Sua chave do Gemini ta num <code>.env</code>.</div>
       </div>
       <div class="term-row">
         <div class="term-name">.json</div>
-        <div class="term-def">Formato de dados estruturados. Pense como uma planilha, mas em texto. Configurações, dados, listas — tudo pode ser JSON.</div>
+        <div class="term-def">Formato de dados estruturados. Tipo uma planilha, so que em texto. Configuracoes, dados, listas. Tudo pode ser JSON.</div>
       </div>
       <div class="term-row">
         <div class="term-name">node_modules</div>
-        <div class="term-def">A pasta onde ficam todas as bibliotecas instaladas. É enorme e nunca vai para o GitHub. O <code>npm install</code> recria ela a partir do <code>package.json</code>.</div>
+        <div class="term-def">A pasta onde ficam todas as bibliotecas instaladas. E enorme e nunca vai pro GitHub. O <code>npm install</code> recria ela a partir do <code>package.json</code>.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Diretório / Pasta</div>
-        <div class="term-def">Mesma coisa. "Diretório" é o termo técnico para "pasta". <code>~/</code> significa sua pasta pessoal.</div>
+        <div class="term-def">Mesma coisa. "Diretorio" e o termo tecnico pra "pasta". <code>~/</code> significa sua pasta pessoal.</div>
       </div>
       <div class="term-row">
         <div class="term-name">Path / Caminho</div>
@@ -47,7 +47,39 @@
       </div>
       <div class="term-row">
         <div class="term-name">.gitignore</div>
-        <div class="term-def">Arquivo que lista o que o Git deve ignorar. Exemplo: <code>node_modules/</code>, <code>.env</code>, <code>.DS_Store</code>. Evita enviar lixo para o GitHub.</div>
+        <div class="term-def">Arquivo que lista o que o Git deve ignorar. Exemplo: <code>node_modules/</code>, <code>.env</code>, <code>.DS_Store</code>. Evita mandar lixo pro GitHub.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">stdout / stderr</div>
+        <div class="term-def">Dois canais de saida do terminal. stdout e a resposta normal, stderr e onde os erros aparecem. Parecem iguais, mas sao separados.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Pipe ( | )</div>
+        <div class="term-def">Conecta a saida de um comando na entrada de outro. <code>ls | grep .html</code> lista arquivos e filtra so os HTML.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Flag / Argumento</div>
+        <div class="term-def">Opcoes extras num comando. Em <code>ls -la</code>, o <code>-la</code> e uma flag que pede mais detalhes. Cada comando tem suas proprias flags.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Binario</div>
+        <div class="term-def">Arquivo executavel que o computador roda direto. Nao da pra ler num editor de texto. Programas compilados viram binarios.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Symlink</div>
+        <div class="term-def">Um atalho que aponta pra outro arquivo ou pasta. Parece que o arquivo ta ali, mas na real ele ta em outro lugar.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">chmod</div>
+        <div class="term-def">Comando que muda permissoes de arquivo. Define quem pode ler, escrever ou executar. <code>chmod +x script.sh</code> torna o script executavel.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Processo</div>
+        <div class="term-def">Um programa rodando na maquina. Cada aba do navegador e um processo. O terminal onde o Claude roda tambem e um processo.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Exit Code</div>
+        <div class="term-def">Numero que um comando retorna quando termina. 0 significa "deu certo". Qualquer outro numero significa que deu algum problema.</div>
       </div>
     </div>
 

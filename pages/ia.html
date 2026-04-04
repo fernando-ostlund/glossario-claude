@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IA e LLMs — Glossario Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> IA e LLMs</div>
+    <div class="section-label">Inteligencia Artificial</div>
+    <h1 class="page-title">IA e LLMs</h1>
+    <p class="page-desc">Como funciona a inteligencia artificial que voce usa todo dia.</p>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="term-name">Temperature</div>
+        <div class="term-def">Controla o quanto a IA varia as respostas. Baixa = previsivel e seguro. Alta = criativo e surpresa.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">System Prompt</div>
+        <div class="term-def">Um briefing invisivel que o Claude recebe antes de comecar. Define o comportamento dele, tipo "seja direto" ou "escreva em portugues".</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Few-shot</div>
+        <div class="term-def">Dar exemplos no prompt pra IA entender o padrao. Tipo mostrar 3 titulos bons antes de pedir o quarto.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Zero-shot</div>
+        <div class="term-def">Pedir algo sem dar exemplo nenhum. A IA tenta entender so pela instrucao.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">RAG</div>
+        <div class="term-def">A IA busca informacao em documentos externos antes de responder. Em vez de confiar so na memoria, ela consulta fontes.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Embeddings</div>
+        <div class="term-def">Transformar texto em numeros pra IA comparar significados. Como coordenadas num mapa de palavras.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Fine-tuning</div>
+        <div class="term-def">Treinar um modelo com dados especificos seus. Como dar aulas particulares pra IA sobre o seu negocio.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Alucinacao</div>
+        <div class="term-def">Quando a IA inventa algo com cara de verdade. Parece confiante, mas ta errada. Sempre confira informacoes criticas.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Grounding</div>
+        <div class="term-def">Tecnicas pra manter a IA ancorada em fatos reais. RAG e uma forma de grounding.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Streaming</div>
+        <div class="term-def">A resposta aparece palavra por palavra, em tempo real. Aquele efeito de digitacao que voce ve no chat.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Latencia</div>
+        <div class="term-def">Tempo entre voce apertar Enter e a resposta comecar a aparecer. Opus e mais lento que Haiku, mas mais esperto.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Janela de Contexto</div>
+        <div class="term-def">Tamanho maximo de texto que a IA consegue "ver" de uma vez. Opus tem 1 milhao de tokens. Quando enche, o historico e comprimido.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/comandos.html" class="btn btn-ghost">← Comandos</a>
+      <a href="/pages/git-avancado.html" class="btn btn-primary">Proximo: Git avancado →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('ia');</script>
+</body>
+</html>

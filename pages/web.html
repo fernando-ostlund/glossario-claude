@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conceitos Web — Glossario Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Conceitos Web</div>
+    <div class="section-label">Como a web funciona</div>
+    <h1 class="page-title">Conceitos Web</h1>
+    <p class="page-desc">Os termos por tras de tudo que roda no navegador.</p>
+
+    <div class="terms">
+      <div class="term-row">
+        <div class="term-name">DOM</div>
+        <div class="term-def">A estrutura da pagina HTML organizada como uma arvore. JavaScript mexe no DOM pra mudar o que aparece na tela.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Responsivo</div>
+        <div class="term-def">Design que se adapta a diferentes tamanhos de tela. Um site responsivo funciona bem no celular e no desktop.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Viewport</div>
+        <div class="term-def">A area visivel da tela do usuario. O <code>meta viewport</code> no HTML diz pro navegador como escalar o site.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Breakpoint</div>
+        <div class="term-def">O ponto onde o layout muda pra se adaptar a outro tamanho de tela. Tipo 860px pro tablet e 480px pro celular.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">CDN</div>
+        <div class="term-def">Servidores espalhados pelo mundo que entregam seus arquivos mais rapido. Google Fonts usa CDN.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">SSL / HTTPS</div>
+        <div class="term-def">O cadeado verde no navegador. Conexao criptografada entre voce e o site. Sem SSL, dados viajam "abertos".</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">DNS</div>
+        <div class="term-def">Traduz nomes de site (google.com) pra enderecos IP. E a agenda telefonica da internet.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Cookie</div>
+        <div class="term-def">Um arquivo pequeno que o site guarda no seu navegador pra lembrar de voce. Login, preferencias, carrinho de compras.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">Cache</div>
+        <div class="term-def">Uma copia local dos arquivos do site. Na proxima visita, carrega mais rapido porque ja tem tudo guardado.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">URL / Route</div>
+        <div class="term-def">URL e o endereco completo de uma pagina. Route e o pedaco depois do dominio, tipo <code>/pages/basicos.html</code>.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 48px;">
+      <a href="/pages/git-avancado.html" class="btn btn-ghost">← Git avancado</a>
+      <a href="/" class="btn btn-primary">Voltar ao inicio →</a>
+    </div>
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('web');</script>
+</body>
+</html>

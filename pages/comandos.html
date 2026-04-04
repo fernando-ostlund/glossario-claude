@@ -13,17 +13,17 @@
   <main class="main">
     <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> Comandos</div>
     <div class="section-label">Referência rápida</div>
-    <h1 class="page-title">Comandos que você vê</h1>
+    <h1 class="page-title">Comandos que voce ve</h1>
     <p class="page-desc">Os comandos mais comuns que aparecem quando o Claude Code trabalha.</p>
 
     <div class="terms">
       <div class="term-row">
         <div class="term-name">ls</div>
-        <div class="term-def">Lista o que tem dentro de uma pasta. Como abrir uma pasta no Finder.</div>
+        <div class="term-def">Lista o que tem dentro de uma pasta. Tipo abrir uma pasta no Finder.</div>
       </div>
       <div class="term-row">
         <div class="term-name">cd</div>
-        <div class="term-def">Muda para outra pasta. <code>cd ~/Desktop</code> vai para o Desktop. Como clicar duas vezes numa pasta.</div>
+        <div class="term-def">Muda pra outra pasta. <code>cd ~/Desktop</code> vai pro Desktop. Tipo clicar duas vezes numa pasta.</div>
       </div>
       <div class="term-row">
         <div class="term-name">mkdir</div>
@@ -35,31 +35,31 @@
       </div>
       <div class="term-row">
         <div class="term-name">rm</div>
-        <div class="term-def">Remove (deleta) arquivo ou pasta. Cuidado: não vai para a lixeira. Seu hook <code>dangerous-command-guard</code> te protege contra <code>rm -rf</code> acidental.</div>
+        <div class="term-def">Remove (deleta) arquivo ou pasta. Cuidado: nao vai pra lixeira. Seu hook <code>dangerous-command-guard</code> te protege contra <code>rm -rf</code> acidental.</div>
       </div>
       <div class="term-row">
         <div class="term-name">cat</div>
-        <div class="term-def">Mostra o conteúdo de um arquivo no terminal. <code>cat package.json</code> imprime o arquivo inteiro na tela.</div>
+        <div class="term-def">Mostra o conteudo de um arquivo no terminal. <code>cat package.json</code> imprime o arquivo inteiro na tela.</div>
       </div>
       <div class="term-row">
         <div class="term-name">npm install</div>
-        <div class="term-def">Instala todas as bibliotecas que o projeto precisa. É a primeira coisa que você roda quando clona um projeto.</div>
+        <div class="term-def">Instala todas as bibliotecas que o projeto precisa. E a primeira coisa que voce roda quando clona um projeto.</div>
       </div>
       <div class="term-row">
         <div class="term-name">npm run dev</div>
-        <div class="term-def">Liga o servidor de desenvolvimento. Seu site fica acessível em <code>localhost:3000</code> (só no seu computador).</div>
+        <div class="term-def">Liga o servidor de desenvolvimento. Seu site fica acessivel em <code>localhost:3000</code> (so no seu computador).</div>
       </div>
       <div class="term-row">
         <div class="term-name">npm run build</div>
-        <div class="term-def">Prepara o projeto para publicação. Otimiza o código, comprime arquivos. É o passo antes do deploy.</div>
+        <div class="term-def">Prepara o projeto pra publicacao. Otimiza o codigo, comprime arquivos. E o passo antes do deploy.</div>
       </div>
       <div class="term-row">
         <div class="term-name">git status</div>
-        <div class="term-def">Mostra o que mudou no projeto desde o último commit. Sempre rode antes de salvar. É o "olhar antes de atravessar a rua".</div>
+        <div class="term-def">Mostra o que mudou no projeto desde o ultimo commit. Sempre roda antes de salvar. Tipo olhar antes de atravessar a rua.</div>
       </div>
       <div class="term-row">
         <div class="term-name">git add</div>
-        <div class="term-def">Seleciona quais arquivos vão entrar no próximo commit. <code>git add arquivo.tsx</code> seleciona um arquivo específico.</div>
+        <div class="term-def">Seleciona quais arquivos vao entrar no proximo commit. <code>git add arquivo.tsx</code> seleciona um arquivo especifico.</div>
       </div>
       <div class="term-row">
         <div class="term-name">git commit</div>
@@ -67,26 +67,46 @@
       </div>
       <div class="term-row">
         <div class="term-name">git push</div>
-        <div class="term-def">Envia seus commits para o GitHub. Faça no final do dia — é seu backup na nuvem.</div>
+        <div class="term-def">Envia seus commits pro GitHub. Faz no final do dia, e seu backup na nuvem.</div>
       </div>
       <div class="term-row">
         <div class="term-name">git pull</div>
-        <div class="term-def">Baixa mudanças do GitHub para o seu computador. Rode no início do dia para sincronizar.</div>
+        <div class="term-def">Baixa mudancas do GitHub pro seu computador. Roda no inicio do dia pra sincronizar.</div>
       </div>
       <div class="term-row">
         <div class="term-name">git clone</div>
-        <div class="term-def">Baixa um projeto inteiro do GitHub para o seu computador pela primeira vez. <code>git clone URL</code>.</div>
+        <div class="term-def">Baixa um projeto inteiro do GitHub pro seu computador pela primeira vez. <code>git clone URL</code>.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">grep</div>
+        <div class="term-def">Busca texto dentro de arquivos. <code>grep "erro" log.txt</code> mostra todas as linhas que tem "erro". O Ctrl+F do terminal.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">chmod</div>
+        <div class="term-def">Muda permissoes de arquivo. <code>chmod +x script.sh</code> permite executar o script. Aparece quando voce precisa rodar algo que ta bloqueado.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">curl</div>
+        <div class="term-def">Faz requisicoes HTTP pelo terminal. Da pra testar APIs, baixar arquivos, ver headers. E o navegador do terminal.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">which</div>
+        <div class="term-def">Mostra onde um comando ta instalado. <code>which node</code> te diz o caminho do Node.js na sua maquina.</div>
+      </div>
+      <div class="term-row">
+        <div class="term-name">kill</div>
+        <div class="term-def">Para um processo que ta rodando. <code>kill -9 PID</code> forca o encerramento. Util quando algo trava.</div>
       </div>
     </div>
 
     <div class="callout">
       <strong>Sequência do dia a dia</strong>
-      <code>git pull</code> → trabalhar → <code>git status</code> → <code>git add</code> → <code>git commit</code> → <code>git push</code>. Essa é a rotina segura.
+      <code>git pull</code> → trabalhar → <code>git status</code> → <code>git add</code> → <code>git commit</code> → <code>git push</code>. Essa e a rotina segura.
     </div>
 
     <div style="display: flex; gap: 12px; margin-top: 48px;">
       <a href="/pages/arquivos.html" class="btn btn-ghost">← Arquivos</a>
-      <a href="/" class="btn btn-primary">Voltar ao início →</a>
+      <a href="/pages/ia.html" class="btn btn-primary">Proximo: IA e LLMs →</a>
     </div>
   </main>
 </div>
