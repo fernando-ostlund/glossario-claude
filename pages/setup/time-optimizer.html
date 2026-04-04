@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>time-optimizer — Glossario Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossario</a> <span class="sep">/</span> <a href="/pages/dashboard.html">Meu Setup</a> <span class="sep">/</span> time-optimizer</div>
+
+    <a href="/pages/dashboard.html" class="detail-back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar pro Setup
+    </a>
+
+    <span class="detail-badge detail-badge--agent">Agent</span>
+    <h1 class="page-title">time-optimizer</h1>
+
+    <div class="detail-section">
+      <h2>O que faz</h2>
+      <p>Analisa como voce usa o tempo, classifica atividades em 4 baldes (Investimentos, Operacoes, Dividas, Vazamentos) e sugere o que blindar, delegar, automatizar ou eliminar. E tipo uma consultoria de produtividade pessoal.</p>
+    </div>
+
+    <div class="detail-section">
+      <h2>Explica como se eu tivesse 5 anos</h2>
+      <p>E tipo um consultor de produtividade pessoal. Voce conta o que faz na semana e ele organiza tudo numa matriz, mostrando onde voce ta investindo bem e onde ta perdendo tempo. Simples assim.</p>
+    </div>
+
+    <div class="detail-section">
+      <h2>Quando usar</h2>
+      <ul>
+        <li>Quando quer revisar sua agenda semanal</li>
+        <li>Quando sente que ta ocupado mas nao produtivo</li>
+        <li>Quando quer decidir o que parar de fazer</li>
+        <li>Quando precisa priorizar entre muitas tarefas</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>Quando NAO usar</h2>
+      <ul>
+        <li>Pra tarefas de codigo ou design</li>
+        <li>Isso e so pra analise de tempo, nao executa nada</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>Os 4 baldes</h2>
+      <ul>
+        <li><strong>Investimentos</strong> — atividades que geram retorno no futuro (estudar, criar, construir)</li>
+        <li><strong>Operacoes</strong> — o basico pra manter as coisas rodando (reunioes, emails, admin)</li>
+        <li><strong>Dividas</strong> — coisas atrasadas que voce precisa resolver (bugs, promessas pendentes)</li>
+        <li><strong>Vazamentos</strong> — tempo perdido que nao volta (scroll infinito, reunioes desnecessarias)</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>Exemplo pratico</h2>
+      <p>Voce lista suas atividades da semana. O agente classifica cada uma, mostra que 40% do seu tempo e "vazamento" e sugere 3 coisas pra eliminar.</p>
+      <div class="detail-example">
+> "analisa minha semana: 10h reunioes, 8h design,<br>
+  5h emails, 4h redes sociais, 3h estudo"<br><br>
+[time-optimizer]<br>
+Investimento: 3h estudo + 8h design = 37%<br>
+Operacoes: 5h emails = 17%<br>
+Vazamento: 4h redes sociais + 6h reunioes = 33%<br>
+Divida: 4h reunioes necessarias = 13%<br><br>
+Sugestao: cortar 4h de reunioes e 2h de redes sociais.<br>
+Isso libera 6h/semana pra investir em design.
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('dashboard');</script>
+</body>
+</html>

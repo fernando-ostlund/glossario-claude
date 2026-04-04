@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playwright — Glossario Claude Code</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="breadcrumb"><a href="/">Glossario</a> <span class="sep">/</span> <a href="/pages/dashboard.html">Meu Setup</a> <span class="sep">/</span> Playwright</div>
+
+    <a href="/pages/dashboard.html" class="detail-back">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar pro Setup
+    </a>
+
+    <span class="detail-badge detail-badge--mcp">MCP Server</span>
+    <h1 class="page-title">Playwright</h1>
+    <p class="page-desc" style="margin-bottom: 32px;">Status: <strong style="color: #4caf50;">Ativo</strong></p>
+
+    <div class="detail-section">
+      <h2>O que faz</h2>
+      <p>Permite que o Claude controle um navegador de verdade. Navegar em sites, clicar, preencher formularios, tirar screenshots, ler o console. Basicamente, da maos pro Claude usar o Chrome.</p>
+    </div>
+
+    <div class="detail-section">
+      <h2>Explica como se eu tivesse 5 anos</h2>
+      <p>Imagina que o Claude tem maos e pode usar o Chrome. Ele abre um site, clica nos botoes, preenche campos, tira foto da tela. E como dar um navegador pro Claude usar igual voce usa.</p>
+    </div>
+
+    <div class="detail-section">
+      <h2>Quando usar</h2>
+      <ul>
+        <li>Pra testar se seu site funciona</li>
+        <li>Pra extrair informacao de um site</li>
+        <li>Pra tirar screenshots automaticos</li>
+        <li>Pra debugar problemas visuais</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>Quando NAO usar</h2>
+      <ul>
+        <li>Pra ler arquivos locais (pra isso tem o Read)</li>
+        <li>Pra fazer buscas simples na web (pra isso tem WebSearch)</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>Tools disponiveis</h2>
+      <ul>
+        <li><strong>navigate</strong> — abre uma URL no navegador</li>
+        <li><strong>click</strong> — clica num elemento da pagina</li>
+        <li><strong>screenshot</strong> — tira foto da tela</li>
+        <li><strong>fill_form</strong> — preenche campos de formulario</li>
+        <li><strong>evaluate</strong> — roda JavaScript na pagina</li>
+        <li><strong>console</strong> — le mensagens do console do navegador</li>
+        <li><strong>tabs</strong> — gerencia abas abertas</li>
+        <li><strong>network_requests</strong> — monitora requisicoes de rede</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>Exemplo pratico</h2>
+      <p>Voce acabou de deployar o glossario. Pede pro Claude "abre o site e confere se ta tudo certo". Ele navega, tira screenshot, checa o console, e reporta se tem erro.</p>
+      <div class="detail-example">
+> "abre glossario-claudinho.vercel.app e confere se ta ok"<br><br>
+[Playwright] Navigating to glossario-claudinho.vercel.app<br>
+[Playwright] Taking screenshot...<br>
+[Playwright] Checking console for errors...<br><br>
+Tudo certo. Site carregou em 1.2s, sem erros no console.<br>
+Dark mode funcionando. 3 screenshots salvos.
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="/shared.js"></script>
+<script>renderSidebar('dashboard');</script>
+</body>
+</html>
