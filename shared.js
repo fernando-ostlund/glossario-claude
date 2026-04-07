@@ -5,19 +5,19 @@
 
 function renderSidebar(activePage) {
   const nav = [
-    { section: 'Comecar', items: [
-      { label: 'Inicio', href: '/', id: 'home' },
+    { section: 'Começar', items: [
+      { label: 'Início', href: '/', id: 'home' },
       { label: 'Cursos Anthropic', href: '/pages/cursos.html', id: 'cursos' },
       { label: 'Meu Setup', href: '/pages/dashboard.html', id: 'dashboard' },
     ]},
-    { section: 'Glossario', items: [
-      { label: 'Conceitos basicos', href: '/pages/basicos.html', id: 'basicos' },
+    { section: 'Glossário', items: [
+      { label: 'Conceitos básicos', href: '/pages/basicos.html', id: 'basicos' },
       { label: 'Ferramentas Claude Code', href: '/pages/ferramentas.html', id: 'ferramentas' },
       { label: 'Desenvolvimento', href: '/pages/desenvolvimento.html', id: 'desenvolvimento' },
       { label: 'Arquivos e estrutura', href: '/pages/arquivos.html', id: 'arquivos' },
       { label: 'Comandos', href: '/pages/comandos.html', id: 'comandos' },
       { label: 'IA e LLMs', href: '/pages/ia.html', id: 'ia' },
-      { label: 'Git avancado', href: '/pages/git-avancado.html', id: 'git-avancado' },
+      { label: 'Git avançado', href: '/pages/git-avancado.html', id: 'git-avancado' },
       { label: 'Conceitos Web', href: '/pages/web.html', id: 'web' },
     ]},
   ];
@@ -25,15 +25,8 @@ function renderSidebar(activePage) {
   const sidebar = document.getElementById('sidebar');
   sidebar.innerHTML = `
     <div class="sidebar-brand">
-      <h2>Glossario</h2>
+      <h2>Glossário</h2>
       <span>Claude Code</span>
-    </div>
-
-    <div class="search-box">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/>
-      </svg>
-      <input type="text" id="search-input" placeholder="Buscar termo...">
     </div>
 
     <nav class="sidebar-nav">
@@ -54,16 +47,6 @@ function renderSidebar(activePage) {
     </div>
   `;
 
-  // Search
-  const searchInput = document.getElementById('search-input');
-  searchInput.addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase().trim();
-    const rows = document.querySelectorAll('.term-row');
-    rows.forEach(row => {
-      const text = row.textContent.toLowerCase();
-      row.style.display = q === '' || text.includes(q) ? '' : 'none';
-    });
-  });
 }
 
 function renderMobileToggle() {
@@ -249,26 +232,29 @@ function renderClaudinho() {
 
   // ── Tips every 18 minutes ──
   const tips = [
-    "Sabia que o /ship salva e publica tudo num comando so?",
-    "Dica: o agente Explore vasculha seu codigo inteiro em segundos.",
-    "O Playwright testa seu site sozinho. Tipo um robo QA particular.",
-    "Ta perdido no Git? O git-guide te salva sem drama.",
+    "Sabia que o /ship salva e publica tudo num comando só?",
+    "Dica: o agente Explore vasculha seu código inteiro em segundos.",
+    "O Playwright testa seu site sozinho. Tipo um robô QA particular.",
+    "Tá perdido no Git? O git-guide te salva sem drama.",
     "O /humanizer tira a cara de IA de qualquer texto.",
-    "Memoria do Claude: ele lembra de voce entre conversas. Serio.",
-    "O safe-guard checa se um comando e perigoso antes de rodar.",
-    "Hooks rodam automaticamente. Voce nem precisa lembrar deles.",
-    "O /frontend-design cria interfaces que nao parecem feitas por IA.",
+    "Memória do Claude: ele lembra de você entre conversas. Sério.",
+    "O safe-guard checa se um comando é perigoso antes de rodar.",
+    "Hooks rodam automaticamente. Você nem precisa lembrar deles.",
+    "O /frontend-design cria interfaces que não parecem feitas por IA.",
     "MCP Servers conectam o Claude com Gmail, Calendar, Supabase...",
-    "O agente ui-researcher define paleta, tipografia e tokens pra voce.",
-    "Quer automatizar apresentacoes? O Deck Automator faz isso.",
-    "O /simplify revisa seu codigo e sugere melhorias.",
-    "Skills sao como manuais: o Claude le e segue as instrucoes.",
-    "Voce tem 48 skills instaladas. Isso e poder de fogo serio.",
+    "O agente ui-researcher define paleta, tipografia e tokens pra você.",
+    "Quer automatizar apresentações? O /pptx faz isso.",
+    "O /simplify revisa seu código e sugere melhorias.",
+    "Skills são como manuais: o Claude lê e segue as instruções.",
+    "Você tem 51 skills instaladas. Isso é poder de fogo sério.",
     "O nano-banana gera imagens com IA direto do terminal.",
-    "Worktrees: o Claude trabalha numa copia sem mexer nos seus arquivos.",
+    "Worktrees: o Claude trabalha numa cópia sem mexer nos seus arquivos.",
     "O /loop roda qualquer comando de tempos em tempos. Tipo um cron.",
     "Subagentes: o Claude cria ajudantes que trabalham em paralelo.",
-    "Tenta me pegar por 55 segundos e ve o que acontece...",
+    "Tenta me pegar por 55 segundos e vê o que acontece...",
+    "O /claudinho ativa o modo brasileiro com acentuação perfeita.",
+    "O /extract-design extrai o design system completo de qualquer site.",
+    "O /font-match encontra alternativas gratuitas pra fontes pagas.",
   ];
 
   let tipIndex = 0;

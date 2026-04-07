@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>safe-guard — Glossario Claude Code</title>
+  <title>safe-guard — Glossário Claude Code</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
 </head>
@@ -11,7 +11,7 @@
 <div class="shell">
   <aside class="sidebar" id="sidebar"></aside>
   <main class="main">
-    <div class="breadcrumb"><a href="/">Glossario</a> <span class="sep">/</span> <a href="/pages/dashboard.html">Meu Setup</a> <span class="sep">/</span> safe-guard</div>
+    <div class="breadcrumb"><a href="/">Glossário</a> <span class="sep">/</span> <a href="/pages/dashboard.html">Meu Setup</a> <span class="sep">/</span> safe-guard</div>
 
     <a href="/pages/dashboard.html" class="detail-back">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -23,19 +23,19 @@
 
     <div class="detail-section">
       <h2>O que faz</h2>
-      <p>Agente de seguranca rapido que avalia o risco de uma acao antes de executar. Da um parecer de "pode ir" ou "para, isso e perigoso". Funciona tipo um filtro automatico entre voce e acoes destrutivas.</p>
+      <p>Agente de segurança rápido que avalia o risco de uma ação antes de executar. Dá um parecer de "pode ir" ou "para, isso é perigoso". Funciona tipo um filtro automático entre você e ações destrutivas.</p>
     </div>
 
     <div class="detail-section">
       <h2>Explica como se eu tivesse 5 anos</h2>
-      <p>E tipo um amigo prudente que fica do seu lado enquanto voce trabalha. Antes de voce apertar o botao vermelho, ele diz "calma, tem certeza? isso apaga tudo". Ele nao bloqueia nada, so avisa.</p>
+      <p>É tipo um amigo prudente que fica do seu lado enquanto você trabalha. Antes de você apertar o botão vermelho, ele diz "calma, tem certeza? isso apaga tudo". Ele não bloqueia nada, só avisa.</p>
     </div>
 
     <div class="detail-section">
       <h2>Quando usar</h2>
       <ul>
         <li>O Claude aciona sozinho quando detecta risco</li>
-        <li>Voce tambem pode chamar manualmente pra checar se uma acao e segura</li>
+        <li>Você também pode chamar manualmente pra checar se uma ação é segura</li>
         <li>Antes de rodar comandos que mexem com arquivos, banco de dados ou deploy</li>
       </ul>
     </div>
@@ -43,21 +43,21 @@
     <div class="detail-section">
       <h2>Quando NAO usar</h2>
       <ul>
-        <li>Pra analise completa de seguranca de um projeto inteiro</li>
+        <li>Pra análise completa de segurança de um projeto inteiro</li>
         <li>Pra auditoria detalhada (pra isso tem ferramentas mais completas)</li>
       </ul>
     </div>
 
     <div class="detail-section">
-      <h2>Exemplo pratico</h2>
-      <p>Voce pede pro Claude rodar <code>rm -rf /</code>. O safe-guard intercepta e diz "isso vai apagar TODO o seu disco. Tem certeza?"</p>
+      <h2>Exemplo prático</h2>
+      <p>Você pede pro Claude rodar <code>rm -rf /</code>. O safe-guard intercepta e diz "isso vai apagar TODO o seu disco. Tem certeza?"</p>
       <div class="detail-example">
 > "apaga todos os arquivos da pasta raiz"<br><br>
 [safe-guard] RISCO ALTO detectado.<br>
-Acao: rm -rf /<br>
+Ação: rm -rf /<br>
 Impacto: Apaga TODOS os arquivos do disco.<br>
-Reversivel: Nao.<br><br>
-Recomendacao: NAO executar.<br>
+Reversível: Não.<br><br>
+Recomendação: NÃO executar.<br>
 Quer continuar mesmo assim? (s/n)
       </div>
     </div>
