@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Token Editor v3 — Glossario Claudinho</title>
+<title>Token Editor v4 — Glossário Claudinho</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700&family=Crimson+Pro:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,8 +36,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== PANEL ===== */
-  .panel {
+  /* ===== EDITOR PANEL ===== */
+  .editor {
     width: 380px;
     min-width: 380px;
     height: 100vh;
@@ -48,33 +48,47 @@
     overflow: hidden;
   }
 
-  .panel-header {
-    padding: 16px 20px 12px;
+  /* ===== HEADER ===== */
+  .ed-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px 12px;
     border-bottom: 1px solid var(--ed-border);
     flex-shrink: 0;
   }
 
-  .panel-title {
+  .ed-header .ogd-logo { height: 20px; width: auto; flex-shrink: 0; }
+
+  .ed-header-title {
     font-family: 'Outfit', sans-serif;
     font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
     color: var(--ed-text-heading);
-    margin-bottom: 2px;
+    letter-spacing: 0.04em;
   }
 
-  .panel-subtitle { font-size: 12px; color: var(--ed-text-muted); }
+  .ed-header-version {
+    font-size: 10px;
+    color: var(--ed-text-muted);
+    font-weight: 500;
+    margin-left: auto;
+  }
 
   /* ===== TOOLBAR ===== */
-  .toolbar {
-    display: flex;
-    gap: 5px;
+  .ed-toolbar {
     padding: 10px 20px;
     border-bottom: 1px solid var(--ed-border);
     flex-shrink: 0;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .toolbar-row {
+    display: flex;
     align-items: center;
+    gap: 5px;
   }
 
   .tool-btn {
@@ -98,21 +112,58 @@
   .tool-btn:disabled { opacity: 0.3; cursor: not-allowed; }
   .tool-btn:disabled:hover { border-color: var(--ed-border); color: var(--ed-text-muted); }
   .tool-btn.active { background: var(--ed-accent); color: white; border-color: var(--ed-accent); }
-  .tool-btn.primary { background: var(--ed-accent); color: white; border-color: var(--ed-accent); }
-  .tool-btn.primary:hover { background: var(--ed-accent-hover); border-color: var(--ed-accent-hover); }
   .tool-btn.ghost { border-color: transparent; }
   .tool-btn.ghost:hover { border-color: var(--ed-border); }
   .tool-btn.wire-active { background: var(--ed-blue); color: white; border-color: var(--ed-blue); }
-  .tool-btn.save-btn { background: var(--ed-green); color: white; border-color: var(--ed-green); font-weight: 600; }
-  .tool-btn.save-btn:hover { background: #66bb6a; border-color: #66bb6a; }
   .tool-btn.lang-btn { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 8px; }
   .tool-sep { width: 1px; height: 18px; background: var(--ed-border); margin: 0 2px; flex-shrink: 0; }
   .tool-spacer { flex: 1; }
 
-  /* ===== TABS ===== */
-  .tabs { display: flex; border-bottom: 1px solid var(--ed-border); flex-shrink: 0; }
+  .undo-redo-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid var(--ed-border);
+    border-radius: 100px;
+    padding: 0 2px;
+  }
 
-  .tab {
+  .undo-redo-group .ur-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    color: var(--ed-text-muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .undo-redo-group .ur-btn:hover:not(:disabled) { color: var(--ed-text-heading); }
+  .undo-redo-group .ur-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .undo-redo-group .ur-count {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--ed-accent);
+    min-width: 8px;
+    text-align: center;
+  }
+
+  .undo-redo-group .ur-sep {
+    width: 1px;
+    height: 14px;
+    background: var(--ed-border);
+  }
+
+  /* ===== TABS ===== */
+  .ed-tabs { display: flex; border-bottom: 1px solid var(--ed-border); flex-shrink: 0; }
+
+  .ed-tab {
     flex: 1;
     padding: 9px 8px;
     font-family: 'Inter', sans-serif;
@@ -129,16 +180,69 @@
     text-align: center;
   }
 
-  .tab:hover { color: var(--ed-text); }
-  .tab.active { color: var(--ed-accent); border-bottom-color: var(--ed-accent); }
+  .ed-tab:hover { color: var(--ed-text); }
+  .ed-tab.active { color: var(--ed-accent); border-bottom-color: var(--ed-accent); }
 
-  /* ===== SCROLL AREA ===== */
-  .panel-body { flex: 1; overflow-y: auto; padding: 16px 20px 80px; }
-  .panel-body::-webkit-scrollbar { width: 4px; }
-  .panel-body::-webkit-scrollbar-track { background: transparent; }
-  .panel-body::-webkit-scrollbar-thumb { background: var(--ed-border); border-radius: 4px; }
+  /* ===== SCROLL BODY ===== */
+  .ed-body { flex: 1; overflow-y: auto; padding: 16px 20px 24px; }
+  .ed-body::-webkit-scrollbar { width: 4px; }
+  .ed-body::-webkit-scrollbar-track { background: transparent; }
+  .ed-body::-webkit-scrollbar-thumb { background: var(--ed-border); border-radius: 4px; }
 
-  /* ===== SECTIONS ===== */
+  /* ===== FOOTER ===== */
+  .ed-footer {
+    flex-shrink: 0;
+    padding: 12px 20px 10px;
+    border-top: 1px solid var(--ed-border);
+    background: var(--ed-bg-section);
+  }
+
+  .save-btn {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background: var(--ed-green);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .save-btn:hover { background: #66bb6a; }
+
+  .save-btn .changes-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.25);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 0 4px;
+  }
+
+  .save-btn .changes-badge.hidden { display: none; }
+
+  .ed-copyright {
+    font-size: 9px;
+    color: var(--ed-text-muted);
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== SECTION TITLE (level 2) ===== */
   .section { margin-bottom: 24px; }
 
   .section-title {
@@ -153,61 +257,87 @@
     border-bottom: 1px solid var(--ed-border);
   }
 
-  /* ===== COLLAPSIBLE SECTIONS ===== */
-  .comp-header {
+  /* ===== COMPONENT CARD (level 3) ===== */
+  .comp-card { margin-bottom: 4px; }
+
+  .comp-card-header {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 10px 0;
     cursor: pointer;
-    border-bottom: 1px solid var(--ed-border);
-    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(51,51,48,0.5);
     user-select: none;
   }
-  .comp-header:hover .comp-header-name { color: var(--ed-text-heading); }
-  .comp-header-icon { width: 16px; height: 16px; color: var(--ed-text-muted); flex-shrink: 0; }
-  .comp-header-name {
-    font-family: 'Outfit', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ed-text);
-    flex: 1;
-    transition: color 0.15s;
-  }
-  .comp-header-chevron {
-    width: 14px; height: 14px;
+
+  .comp-card-header:hover .comp-name { color: var(--ed-text-heading); }
+
+  .comp-chevron {
+    width: 14px;
+    height: 14px;
     color: var(--ed-text-muted);
     transition: transform 0.2s;
     flex-shrink: 0;
   }
-  .comp-header.collapsed .comp-header-chevron { transform: rotate(-90deg); }
-  .comp-body { margin-bottom: 16px; }
-  .comp-body.hidden { display: none; }
 
-  /* ===== TOKEN ROW ===== */
+  .comp-card-header.collapsed .comp-chevron { transform: rotate(-90deg); }
+
+  .comp-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ed-text);
+    flex: 1;
+    transition: color 0.15s;
+  }
+
+  .comp-preview {
+    font-size: 10px;
+    color: var(--ed-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+  }
+
+  .comp-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ed-accent);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .comp-dot.visible { opacity: 1; }
+
+  .comp-card-body { padding: 8px 0 12px; }
+  .comp-card-body.hidden { display: none; }
+
+  /* ===== TOKEN ROW (level 4) ===== */
   .token-row {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 7px 0;
-    border-bottom: 1px solid rgba(51,51,48,0.4);
+    border-bottom: 1px solid rgba(51,51,48,0.3);
   }
 
   .token-row:last-child { border-bottom: none; }
 
   .token-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 11px;
+    font-weight: 400;
     color: var(--ed-text-muted);
-    min-width: 110px;
+    min-width: 90px;
     flex-shrink: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
-  .token-label:hover { color: var(--ed-text); }
+  .token-label.changed { color: var(--ed-accent); }
 
+  /* ===== INPUTS ===== */
   .color-input-wrap { display: flex; align-items: center; gap: 8px; flex: 1; }
 
   .color-swatch {
@@ -276,7 +406,7 @@
   .toggle-switch.on { background: var(--ed-green); }
   .toggle-switch.on::after { left: 18px; background: white; }
 
-  /* ===== DISCRETE RADIUS OPTIONS ===== */
+  /* ===== RADIUS OPTIONS ===== */
   .radius-options { display: flex; gap: 4px; flex: 1; }
   .radius-opt {
     font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500;
@@ -287,8 +417,90 @@
   .radius-opt:hover { border-color: var(--ed-text); color: var(--ed-text); }
   .radius-opt.active { background: var(--ed-accent); color: white; border-color: var(--ed-accent); }
 
+  /* ===== HSB COLOR PICKER ===== */
+  .hsb-picker {
+    background: var(--ed-bg-input);
+    border: 1px solid var(--ed-border);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+  }
+
+  .hsb-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .hsb-row:last-child { margin-bottom: 0; }
+
+  .hsb-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ed-text-muted);
+    width: 14px;
+    flex-shrink: 0;
+  }
+
+  .hsb-slider {
+    flex: 1; height: 8px; -webkit-appearance: none; appearance: none;
+    border-radius: 4px; outline: none; cursor: pointer;
+  }
+
+  .hsb-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid rgba(0,0,0,0.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    cursor: pointer;
+  }
+
+  .hsb-slider.hue-slider {
+    background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  }
+
+  .hsb-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ed-text-muted);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .hsb-hex-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--ed-border);
+  }
+
+  .hsb-swatch-preview {
+    width: 28px; height: 28px; border-radius: 6px;
+    border: 1px solid var(--ed-border); flex-shrink: 0;
+  }
+
+  .hsb-hex-input {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ed-text); background: var(--ed-bg);
+    border: 1px solid var(--ed-border); border-radius: 6px;
+    padding: 6px 8px; width: 86px; outline: none;
+  }
+
+  .hsb-hex-input:focus { border-color: var(--ed-accent); }
+
+  /* ===== SEMANTIC COLOR ===== */
+  .sem-color-wrap { display: flex; align-items: center; gap: 6px; flex: 1; }
+  .sem-color-select { max-width: 130px; }
+
   /* ===== THEME CARDS ===== */
   .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+
   .theme-card {
     background: var(--ed-bg-input); border: 1px solid var(--ed-border);
     border-radius: 8px; padding: 10px 12px; cursor: pointer;
@@ -300,11 +512,19 @@
     font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
     color: var(--ed-text-heading); margin-bottom: 2px;
   }
-  .theme-card-desc { font-size: 9px; color: var(--ed-text-muted); margin-bottom: 6px; line-height: 1.3; }
+  .theme-card-desc { font-size: 9px; color: var(--ed-text-muted); margin-bottom: 4px; line-height: 1.3; }
+  .theme-card-fonts { font-size: 8px; color: var(--ed-text-muted); margin-bottom: 4px; font-style: italic; }
   .theme-swatches { display: flex; gap: 3px; }
   .theme-swatch {
     width: 18px; height: 18px; border-radius: 50%;
     border: 1px solid rgba(255,255,255,0.1);
+  }
+  .theme-card-meta {
+    display: flex; gap: 6px; margin-top: 4px;
+  }
+  .theme-card-tag {
+    font-size: 8px; font-weight: 500; color: var(--ed-text-muted);
+    background: var(--ed-bg); padding: 2px 5px; border-radius: 3px;
   }
 
   /* ===== NOTES / REFERENCES ===== */
@@ -326,28 +546,67 @@
   }
   .attachment-card img { width: 48px; height: 48px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
   .attachment-card .att-info { flex: 1; min-width: 0; }
-  .attachment-card .att-name {
-    font-size: 11px; color: var(--ed-text); font-weight: 500;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
+  .attachment-card .att-name { font-size: 11px; color: var(--ed-text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .attachment-card .att-type { font-size: 9px; color: var(--ed-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-  .attachment-card .att-delete {
-    width: 20px; height: 20px; border-radius: 50%; border: none;
-    background: transparent; color: var(--ed-text-muted); cursor: pointer;
-    font-size: 14px; display: flex; align-items: center; justify-content: center;
-  }
+  .attachment-card .att-delete { width: 20px; height: 20px; border-radius: 50%; border: none; background: transparent; color: var(--ed-text-muted); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
   .attachment-card .att-delete:hover { color: var(--ed-red); background: rgba(229,57,53,0.1); }
   .attachment-card iframe { width: 100%; height: 120px; border: none; border-radius: 4px; }
   .att-link { color: var(--ed-blue); text-decoration: none; font-size: 10px; }
   .att-link:hover { text-decoration: underline; }
 
-  /* ===== SEMANTIC COLOR PICKER ===== */
-  .sem-color-wrap { display: flex; align-items: center; gap: 6px; flex: 1; }
-  .sem-color-select { max-width: 130px; }
-  .sem-color-swatch {
-    width: 22px; height: 22px; border-radius: 4px;
-    border: 1px solid var(--ed-border); flex-shrink: 0;
+  /* ===== DS TAB ===== */
+  .ds-swatch-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px; margin-bottom: 16px;
   }
+
+  .ds-swatch-card {
+    background: var(--ed-bg-input); border: 1px solid var(--ed-border);
+    border-radius: 6px; padding: 8px; cursor: pointer; text-align: center;
+    transition: border-color 0.15s;
+  }
+
+  .ds-swatch-card:hover { border-color: var(--ed-accent); }
+
+  .ds-swatch-box {
+    width: 100%; height: 32px; border-radius: 4px;
+    border: 1px solid var(--ed-border); margin-bottom: 6px;
+  }
+
+  .ds-swatch-name { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ed-text-muted); }
+  .ds-swatch-hex { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ed-text); }
+
+  .ds-type-sample { margin-bottom: 12px; }
+  .ds-type-meta { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ed-text-muted); margin-top: 2px; }
+
+  .ds-spacing-bar {
+    height: 8px; background: var(--ed-accent); border-radius: 2px;
+    margin-bottom: 4px; opacity: 0.6;
+  }
+
+  .ds-radius-grid {
+    display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+
+  .ds-radius-box {
+    width: 48px; height: 48px; border: 2px solid var(--ed-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: var(--ed-text-muted);
+  }
+
+  .ds-icon-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 8px; margin-bottom: 16px;
+  }
+
+  .ds-icon-cell {
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--ed-bg-input); border-radius: 6px;
+    color: var(--ed-text-muted);
+  }
+
+  .ds-icon-cell svg { width: 20px; height: 20px; }
 
   /* ===== PREVIEW AREA ===== */
   .preview {
@@ -380,15 +639,6 @@
     box-shadow: 0 0 0 2px var(--ed-border), 0 8px 32px rgba(0,0,0,0.4);
   }
 
-  /* ===== STATUS BAR ===== */
-  .status-bar {
-    position: fixed; bottom: 0; left: 0; width: 380px;
-    padding: 7px 20px; background: var(--ed-bg-section);
-    border-top: 1px solid var(--ed-border);
-    font-size: 11px; color: var(--ed-text-muted);
-    display: flex; justify-content: space-between; align-items: center; z-index: 5;
-  }
-
   /* ===== TOAST ===== */
   .snapshot-toast {
     position: fixed; top: 20px; right: 20px; z-index: 9999;
@@ -401,31 +651,21 @@
   .snapshot-toast.show { opacity: 1; transform: translateY(0); }
   .snapshot-toast.error { background: var(--ed-red); }
 
-  /* ===== CHANGES BADGE ===== */
-  .changes-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-width: 16px; height: 16px; border-radius: 100px;
-    background: white; color: var(--ed-green);
-    font-size: 9px; font-weight: 700; padding: 0 4px;
+  /* ===== INSPECT MODE HINT ===== */
+  .inspect-hint {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(99,140,210,0.9); color: white;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500;
+    padding: 6px 14px; border-radius: 100px; z-index: 9999;
+    pointer-events: none; opacity: 0; transition: opacity 0.2s;
   }
-  .changes-badge.hidden { display: none; }
-
-  .undo-count {
-    font-size: 9px; font-weight: 600; color: var(--ed-accent);
-    margin-left: 2px;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
+  .inspect-hint.visible { opacity: 1; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 860px) {
     body { flex-direction: column; }
-    .panel { width: 100%; min-width: auto; height: 50vh; }
+    .editor { width: 100%; min-width: auto; height: 50vh; }
     .preview { height: 50vh; }
-    .status-bar { width: 100%; }
   }
 </style>
 </head>
@@ -434,64 +674,78 @@
 <!-- TOAST -->
 <div class="snapshot-toast" id="toast"></div>
 
+<!-- INSPECT HINT -->
+<div class="inspect-hint" id="inspectHint">Control + hover para inspecionar</div>
+
 <!-- ===== EDITOR PANEL ===== -->
-<div class="panel">
-  <div class="panel-header">
-    <div class="panel-title" id="panelTitle">Token Editor</div>
-    <div class="panel-subtitle" id="panelSubtitle">Glossario Claudinho — Design System</div>
+<div class="editor">
+
+  <!-- HEADER -->
+  <div class="ed-header">
+    <svg class="ogd-logo" viewBox="0 0 640 345.31" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#fff" d="M106.17,239.58c0,10.66,4.7,11.26,21.09,12.29v8.6h-46.49V73.89h46.49v8.6c-16.39,1.03-21.09,1.65-21.09,12.29v144.79Z"/>
+      <path fill="#fff" d="M133.45,177.93c0-34.2,24.37-59.6,59.39-59.6s59.4,21.51,59.4,55.71-24.37,59.6-59.4,59.6-59.39-21.51-59.39-55.71ZM163.56,84.15h60.21v19.44h-60.21v-19.44ZM207.38,183.87c0-35.02-3.89-56.51-15.56-56.51-10.86,0-13.52,15.16-13.52,40.75,0,35.02,3.89,56.51,15.57,56.51,10.86,0,13.52-15.14,13.52-40.75Z"/>
+      <path fill="#fff" d="M286.91,189.82c-2.66,2.45-5.12,5.12-5.12,9,0,3.07,2.04,5.54,5.53,5.54h45.67c29.49,0,40.96,12.69,40.96,31.53,0,26.83-25.19,41.37-63.69,41.37-33.58,0-54.48-8.6-54.48-24.78,0-10.04,10.24-14.34,18.84-15.16-8.8-3.49-13.92-12.49-13.92-21.29,0-13.92,9.42-22.75,20.48-28.47-11.46-5.34-19.87-14.54-19.87-29.7,0-25,21.51-39.54,51.2-39.54,8.4,0,14.54,1.23,19.87,2.67l37.48-.82v14.74h-9.63l-11.67-.4c7.58,5.12,12.49,12.89,12.49,23.13,0,22.95-21.91,35.64-50.38,35.64-7.78,0-16.18-1.02-23.75-3.47ZM279.33,242.65c-.82,1.03-1.03,3.29-1.03,5.54,0,11.87,13.32,18.63,32.57,18.63,17.82,0,34.4-3.89,34.4-16.38,0-5.32-3.28-7.79-9.83-7.79h-56.11ZM322.55,156.64c0-15.16-3.49-29.08-11.88-29.08s-10.45,9.62-10.45,27.03c0,16.18,3.69,29.9,11.88,29.9s10.45-9.42,10.45-27.85Z"/>
+      <path fill="#fff" d="M439.34,87.42v-6.97l45.87-9.2h7.16v135.99c0,6.95.62,10.44,6.55,10.44h4.71v9l-46.07,6.97h-7.99l.62-19.46c-8.4,13.11-19.66,19.46-33.38,19.46-23.75,0-41.37-18.23-41.37-52.63,0-40.55,24.78-61.65,55.3-61.65,7.99,0,14.95,1.83,19.46,5.52v-31.93l-10.86-5.54ZM418.04,168.73c0,25.18,8.6,41.97,23.15,41.97,2.87,0,5.94-.4,9.01-1.43v-58.16c0-12.49-2.46-19.04-12.29-19.04-13.52,0-19.87,14.54-19.87,36.67Z"/>
+      <path fill="#fff" d="M533.83,94.79c0-10.64-4.71-11.26-21.09-12.29v-8.6h46.49v186.58h-46.49v-8.6c16.38-1.03,21.09-1.63,21.09-12.29V94.79Z"/>
+    </svg>
+    <span class="ed-header-title">Token Editor</span>
+    <span class="ed-header-version">v4</span>
   </div>
 
-  <!-- TOOLBAR ROW 1 -->
-  <div class="toolbar">
-    <button class="tool-btn active" id="btnLight" onclick="setTheme('light')">Light</button>
-    <button class="tool-btn" id="btnDark" onclick="setTheme('dark')">Dark</button>
-    <div class="tool-sep"></div>
-    <button class="tool-btn" id="btnUndo" onclick="undo()" disabled>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h10a5 5 0 0 1 0 10H9"/><path d="m3 10 4-4"/><path d="m3 10 4 4"/></svg>
-      <span id="undoLabel">Desfazer</span> <span class="undo-count" id="undoCount"></span>
-    </button>
-    <button class="tool-btn lang-btn" id="btnLang" onclick="toggleLang()">PT</button>
-    <div class="tool-spacer"></div>
-    <button class="tool-btn ghost" id="btnReset" onclick="resetAll()">Reset</button>
-    <button class="tool-btn ghost" id="btnOverview" onclick="window.open('token-overview.html','_blank')">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      <span id="overviewLabel">Sistema</span>
-    </button>
-    <button class="tool-btn save-btn" id="btnSave" onclick="saveTokens()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
-      <span id="saveLabel">Salvar</span>
+  <!-- TOOLBAR -->
+  <div class="ed-toolbar">
+    <div class="toolbar-row">
+      <button class="tool-btn active" id="btnLight" onclick="setTheme('light')">Light</button>
+      <button class="tool-btn" id="btnDark" onclick="setTheme('dark')">Dark</button>
+      <div class="tool-sep"></div>
+      <div class="undo-redo-group">
+        <button class="ur-btn" id="btnUndo" onclick="undo()" disabled title="Cmd+Z">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h10a5 5 0 0 1 0 10H9"/><path d="m3 10 4-4"/><path d="m3 10 4 4"/></svg>
+          <span class="ur-count" id="undoCount"></span>
+        </button>
+        <div class="ur-sep"></div>
+        <button class="ur-btn" id="btnRedo" onclick="redo()" disabled title="Cmd+Shift+Z">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10H11a5 5 0 0 0 0 10h4"/><path d="m21 10-4-4"/><path d="m21 10-4 4"/></svg>
+          <span class="ur-count" id="redoCount"></span>
+        </button>
+      </div>
+      <div class="tool-spacer"></div>
+      <button class="tool-btn ghost" id="btnReset" onclick="resetAll()">Reset</button>
+    </div>
+    <div class="toolbar-row">
+      <button class="tool-btn" id="btnDesktop" onclick="setViewport('desktop')" style="border-color:var(--ed-accent);color:var(--ed-accent)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+        Desktop
+      </button>
+      <button class="tool-btn" id="btnMobile" onclick="setViewport('mobile')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        Mobile
+      </button>
+      <div class="tool-sep"></div>
+      <button class="tool-btn" id="btnWireframe" onclick="toggleWireframe()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Wireframe
+      </button>
+      <div class="tool-spacer"></div>
+      <button class="tool-btn lang-btn" id="btnLang" onclick="toggleLang()">PT</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="ed-tabs" id="tabBar"></div>
+
+  <!-- BODY -->
+  <div class="ed-body" id="panelBody"></div>
+
+  <!-- FOOTER -->
+  <div class="ed-footer">
+    <button class="save-btn" id="btnSave" onclick="saveTokens()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
+      <span id="saveLabel">SALVAR</span>
       <span class="changes-badge hidden" id="changesBadge">0</span>
     </button>
-  </div>
-
-  <!-- TOOLBAR ROW 2 -->
-  <div class="toolbar" style="padding-top:0; border-bottom:none;">
-    <button class="tool-btn" id="btnDesktop" onclick="setViewport('desktop')" style="border-color:var(--ed-accent);color:var(--ed-accent)">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
-      Desktop
-    </button>
-    <button class="tool-btn" id="btnMobile" onclick="setViewport('mobile')">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-      Mobile
-    </button>
-    <div class="tool-sep"></div>
-    <button class="tool-btn" id="btnWireframe" onclick="toggleWireframe()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      Wireframe
-    </button>
-    <button class="tool-btn" onclick="takeSnapshot()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      Print
-    </button>
-  </div>
-
-  <div class="tabs" id="tabBar"></div>
-
-  <div class="panel-body" id="panelBody"></div>
-
-  <div class="status-bar" id="statusBar">
-    <span id="statusText">Nenhuma alteracao</span>
-    <span id="statusTheme">light · desktop</span>
+    <div class="ed-copyright">OneGoodDesign &copy; 2026</div>
   </div>
 </div>
 
@@ -510,6 +764,10 @@
     </select>
     <span class="preview-size-label" id="sizeLabel">100%</span>
     <button class="tool-btn" onclick="refreshPreview()">Refresh</button>
+    <button class="tool-btn" onclick="takeSnapshot()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Print
+    </button>
   </div>
   <div class="preview-frame-wrap" id="frameWrap">
     <iframe id="previewFrame" class="preview-frame" src="index.html"></iframe>
@@ -522,17 +780,14 @@
 // ===================================================================
 const LANG = {
   pt: {
-    panelTitle: 'Token Editor',
-    panelSubtitle: 'Glossario Claudinho — Design System',
-    tabTemas: 'Temas',
-    tabCores: 'Cores',
-    tabTipo: 'Tipo',
     tabComponentes: 'Componentes',
+    tabTemas: 'Temas',
+    tabDS: 'Design System',
     tabReferencias: 'Referências',
     undo: 'Desfazer',
+    redo: 'Refazer',
     reset: 'Reset',
-    overview: 'Sistema',
-    save: 'Salvar',
+    save: 'SALVAR',
     noChanges: 'Nenhuma alteração',
     tokensChanged: (n) => `${n} token${n>1?'s':''} alterado${n>1?'s':''}`,
     saveSuccess: 'Tokens salvos em styles.css',
@@ -555,6 +810,10 @@ const LANG = {
     generateThemes: 'Gerar variações',
     themesTitle: 'Predefinições de tema',
     themesDesc: 'Passe o mouse para pré-visualizar. Clique para aplicar.',
+    secTipografia: 'TIPOGRAFIA',
+    secPaleta: 'PALETA',
+    secLayout: 'LAYOUT',
+    secComponentes: 'COMPONENTES',
     fundos: 'Fundos',
     textos: 'Textos',
     accentUI: 'Accent e Interface',
@@ -568,19 +827,24 @@ const LANG = {
     personalizado: 'Personalizado',
     visivelMobile: 'Visível no mobile',
     espessuraTraco: 'Espessura do traço',
+    dsPaleta: 'Paleta completa',
+    dsEscala: 'Escala tipográfica',
+    dsEspacamento: 'Espaçamento',
+    dsRadius: 'Border Radius',
+    dsComponentes: 'Componentes',
+    dsIcones: 'Ícones',
+    inspectHint: 'Control + hover para inspecionar',
+    inspectSelect: 'Clique para selecionar',
   },
   en: {
-    panelTitle: 'Token Editor',
-    panelSubtitle: 'Glossario Claudinho — Design System',
-    tabTemas: 'Themes',
-    tabCores: 'Colors',
-    tabTipo: 'Type',
     tabComponentes: 'Components',
+    tabTemas: 'Themes',
+    tabDS: 'Design System',
     tabReferencias: 'References',
     undo: 'Undo',
+    redo: 'Redo',
     reset: 'Reset',
-    overview: 'System',
-    save: 'Save',
+    save: 'SAVE',
     noChanges: 'No changes',
     tokensChanged: (n) => `${n} token${n>1?'s':''} changed`,
     saveSuccess: 'Tokens saved to styles.css',
@@ -603,6 +867,10 @@ const LANG = {
     generateThemes: 'Generate variations',
     themesTitle: 'Theme presets',
     themesDesc: 'Hover to preview. Click to apply.',
+    secTipografia: 'TYPOGRAPHY',
+    secPaleta: 'PALETTE',
+    secLayout: 'LAYOUT',
+    secComponentes: 'COMPONENTS',
     fundos: 'Backgrounds',
     textos: 'Text',
     accentUI: 'Accent & UI',
@@ -616,6 +884,14 @@ const LANG = {
     personalizado: 'Custom',
     visivelMobile: 'Visible on mobile',
     espessuraTraco: 'Stroke width',
+    dsPaleta: 'Full palette',
+    dsEscala: 'Type scale',
+    dsEspacamento: 'Spacing',
+    dsRadius: 'Border Radius',
+    dsComponentes: 'Components',
+    dsIcones: 'Icons',
+    inspectHint: 'Control + hover to inspect',
+    inspectSelect: 'Click to select',
   }
 };
 
@@ -711,7 +987,7 @@ const TOKENS = {
       '--title-lh':      { value: '0.95', label: 'entrelinha', type: 'slider', min: 0.8, max: 1.4, step: 0.05, prop: 'line-height', unit: '', selector: '.page-title' },
       '--title-spacing': { value: '-0.035', label: 'espacamento', type: 'slider', min: -0.06, max: 0.02, step: 0.005, prop: 'letter-spacing', unit: 'em', selector: '.page-title' },
     },
-    'Descrição (page-desc)': {
+    'Descrição': {
       '--desc-font':    { value: "'Crimson Pro', Georgia, serif", label: 'familia', type: 'font' },
       '--desc-size':    { value: '18', label: 'tamanho', type: 'slider', min: 14, max: 28, prop: 'font-size', unit: 'px', selector: '.page-desc' },
       '--desc-weight':  { value: '400', label: 'peso', type: 'select', options: ['300','400','500'], prop: 'font-weight', selector: '.page-desc' },
@@ -719,7 +995,7 @@ const TOKENS = {
       '--desc-lh':      { value: '1.6', label: 'entrelinha', type: 'slider', min: 1.2, max: 2.0, step: 0.05, prop: 'line-height', unit: '', selector: '.page-desc' },
       '--desc-spacing': { value: '0', label: 'espacamento', type: 'slider', min: -0.02, max: 0.04, step: 0.005, prop: 'letter-spacing', unit: 'em', selector: '.page-desc' },
     },
-    'Subtítulos (H2)': {
+    'Subtítulo (H2)': {
       '--h2-font':    { value: "'Outfit', sans-serif", label: 'familia', type: 'font' },
       '--h2-size':    { value: '28', label: 'tamanho', type: 'slider', min: 18, max: 48, prop: 'font-size', unit: 'px', selector: 'h2, .dash-section-title' },
       '--h2-weight':  { value: '700', label: 'peso', type: 'select', options: ['400','500','600','700'], prop: 'font-weight', selector: 'h2, .dash-section-title' },
@@ -732,12 +1008,12 @@ const TOKENS = {
       '--label-weight':  { value: '600', label: 'peso', type: 'select', options: ['400','500','600','700'], prop: 'font-weight', selector: '.section-label, .sidebar-section-label, .dash-category-label' },
       '--label-spacing': { value: '0.14', label: 'espacamento', type: 'slider', min: 0.04, max: 0.24, step: 0.01, prop: 'letter-spacing', unit: 'em', selector: '.section-label, .sidebar-section-label, .dash-category-label' },
     },
-    'Corpo (body)': {
+    'Corpo do texto': {
       '--body-font':  { value: "'Inter', -apple-system, sans-serif", label: 'familia', type: 'font' },
       '--body-size':  { value: '15', label: 'tamanho', type: 'slider', min: 12, max: 20, prop: 'font-size', unit: 'px', selector: 'body' },
       '--body-lh':    { value: '1.65', label: 'entrelinha', type: 'slider', min: 1.2, max: 2.0, step: 0.05, prop: 'line-height', unit: '', selector: 'body' },
     },
-    'Term Name': {
+    'Nome do termo': {
       '--tn-font':   { value: "'JetBrains Mono', monospace", label: 'familia', type: 'font' },
       '--tn-size':   { value: '13.5', label: 'tamanho', type: 'slider', min: 11, max: 16, step: 0.5, prop: 'font-size', unit: 'px', selector: '.term-name' },
       '--tn-weight': { value: '500', label: 'peso', type: 'select', options: ['400','500','600','700'], prop: 'font-weight', selector: '.term-name' },
@@ -745,6 +1021,9 @@ const TOKENS = {
     'Código inline': {
       '--code-font': { value: "'JetBrains Mono', monospace", label: 'familia', type: 'font' },
       '--code-size': { value: '12', label: 'tamanho', type: 'slider', min: 10, max: 16, prop: 'font-size', unit: 'px', selector: 'code, .dash-card-name, .dash-cmd' },
+    },
+    'Link da sidebar': {
+      '--sb-link-size': { value: '13.5', label: 'tamanho', type: 'slider', min: 11, max: 16, step: 0.5, prop: 'font-size', unit: 'px', selector: '.sidebar-link' },
     },
   },
   espacamento: {
@@ -783,24 +1062,6 @@ const TOKENS = {
       '--callout-size': { value: '14', label: 'Tamanho texto', type: 'slider', min: 12, max: 18, prop: 'font-size', unit: 'px', selector: '.callout' },
       '--callout-radius': { value: '12', label: 'Raio de borda', type: 'radius', prop: 'border-radius', unit: 'px', selector: '.callout, .courses' },
     },
-    'Term Row': {
-      _icon: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',
-      '--tr-gap':  { value: '32', label: 'Gap nome-def', type: 'slider', min: 12, max: 64, prop: 'gap', unit: 'px', selector: '.term-row' },
-      '--tr-pad':  { value: '18', label: 'Pad vertical', type: 'slider', min: 8, max: 32, prop: 'padding-top', unit: 'px', selector: '.term-row', mirror: 'padding-bottom' },
-    },
-    'Barra lateral': {
-      _icon: 'M3 3h18v18H3zM9 3v18',
-      '--sb-brand-mb':  { value: '36', label: 'Espaço brand-nav', type: 'slider', min: 16, max: 64, prop: 'margin-bottom', unit: 'px', selector: '.sidebar-brand' },
-      '--sb-link-size': { value: '13.5', label: 'Tamanho links', type: 'slider', min: 11, max: 16, step: 0.5, prop: 'font-size', unit: 'px', selector: '.sidebar-link' },
-      '--sb-link-pad':  { value: '6', label: 'Pad vertical links', type: 'slider', min: 4, max: 14, prop: 'padding-top', unit: 'px', selector: '.sidebar-link', mirror: 'padding-bottom' },
-    },
-    'Dashboard Cards': {
-      _icon: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
-      '--dash-gap':      { value: '12', label: 'Gap entre cards', type: 'slider', min: 4, max: 24, prop: 'gap', unit: 'px', selector: '.dash-cards' },
-      '--dash-cols':     { value: '2', label: 'Colunas', type: 'select', options: ['1','2','3'], prop: 'grid-template-columns', unit: '', selector: '.dash-cards', transform: (v) => `repeat(${v}, 1fr)` },
-      '--dash-card-pad': { value: '18', label: 'Padding cards', type: 'slider', min: 10, max: 32, prop: 'padding', unit: 'px', selector: '.dash-card' },
-      '--dash-card-radius': { value: '10', label: 'Raio de borda', type: 'radius', prop: 'border-radius', unit: 'px', selector: '.dash-card, .dash-stat' },
-    },
     'Claudinho': {
       _icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
       '--claud-size':   { value: '80', label: 'Tamanho', type: 'slider', min: 40, max: 140, prop: 'width', unit: 'px', selector: '.claudinho' },
@@ -812,11 +1073,44 @@ const TOKENS = {
       _icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
       '--icon-stroke': { value: '2', label: 'espessuraTraco', type: 'slider', min: 1, max: 3, step: 0.5, prop: 'stroke-width', unit: '', selector: '.sidebar-link svg, .dash-section-icon svg, .dash-category-label svg' },
     },
+    'Dashboard Cards': {
+      _icon: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
+      '--dash-gap':      { value: '12', label: 'Gap entre cards', type: 'slider', min: 4, max: 24, prop: 'gap', unit: 'px', selector: '.dash-cards' },
+      '--dash-cols':     { value: '2', label: 'Colunas', type: 'select', options: ['1','2','3'], prop: 'grid-template-columns', unit: '', selector: '.dash-cards', transform: (v) => `repeat(${v}, 1fr)` },
+      '--dash-card-pad': { value: '18', label: 'Padding cards', type: 'slider', min: 10, max: 32, prop: 'padding', unit: 'px', selector: '.dash-card' },
+      '--dash-card-radius': { value: '10', label: 'Raio de borda', type: 'radius', prop: 'border-radius', unit: 'px', selector: '.dash-card, .dash-stat' },
+    },
   }
 };
 
 // ===================================================================
-// THEME PRESETS
+// FASE 0: SELECTOR_MAP (mapa reverso)
+// ===================================================================
+let SELECTOR_MAP = {};
+
+function buildSelectorMap() {
+  SELECTOR_MAP = {};
+  const sections = { tipografia: 'tipografia', espacamento: 'layout', componentes: 'componentes' };
+  for (const [sectionKey, sectionLabel] of Object.entries(sections)) {
+    for (const [groupName, tokens] of Object.entries(TOKENS[sectionKey])) {
+      for (const [varName, def] of Object.entries(tokens)) {
+        if (varName.startsWith('_') || !def.selector) continue;
+        const selectors = def.selector.split(',').map(s => s.trim());
+        for (const sel of selectors) {
+          if (!SELECTOR_MAP[sel]) {
+            SELECTOR_MAP[sel] = { name: groupName, section: sectionLabel, tokens: [] };
+          }
+          if (!SELECTOR_MAP[sel].tokens.includes(varName)) {
+            SELECTOR_MAP[sel].tokens.push(varName);
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===================================================================
+// THEME PRESETS (v4: com tipografia + radius + iconStyle)
 // ===================================================================
 function hsl(h, s, l) {
   s = Math.max(0, Math.min(100, s));
@@ -849,7 +1143,8 @@ function generateThemeFromHue(hue, name, desc) {
       '--border': hsl(hue, 4, 20), '--accent': hsl(hue, 50, 65), '--accent-hover': hsl(hue, 55, 55),
       '--btn-dark-bg': hsl(hue, 4, 90), '--btn-dark-text': hsl(hue, 5, 10),
       '--tag-essential-bg': hsl(hue, 4, 90), '--tag-essential-text': hsl(hue, 5, 10),
-    }
+    },
+    fonts: null, radius: null, iconStyle: null
   };
 }
 
@@ -858,17 +1153,106 @@ const THEME_PRESETS = [
     name: 'Original',
     description: 'O tema padrão do glossário',
     light: { '--bg':'#faf9f5','--bg-sidebar':'#f5f4ef','--bg-card':'#ffffff','--bg-code':'#f0efe8','--bg-callout':'rgba(217,119,87,0.07)','--text':'#3d3d3a','--text-heading':'#1a1a19','--text-muted':'#9a9890','--border':'#e8e6dc','--accent':'#d97757','--accent-hover':'#c4684a','--btn-dark-bg':'#191918','--btn-dark-text':'#faf9f5','--tag-essential-bg':'#191918','--tag-essential-text':'#faf9f5' },
-    dark: { '--bg':'#1a1a19','--bg-sidebar':'#141413','--bg-card':'#232322','--bg-code':'#2a2a28','--bg-callout':'rgba(217,119,87,0.12)','--text':'#c8c6be','--text-heading':'#eae8e1','--text-muted':'#7a7870','--border':'#333330','--accent':'#e08a6d','--accent-hover':'#d97757','--btn-dark-bg':'#eae8e1','--btn-dark-text':'#1a1a19','--tag-essential-bg':'#eae8e1','--tag-essential-text':'#1a1a19' }
+    dark: { '--bg':'#1a1a19','--bg-sidebar':'#141413','--bg-card':'#232322','--bg-code':'#2a2a28','--bg-callout':'rgba(217,119,87,0.12)','--text':'#c8c6be','--text-heading':'#eae8e1','--text-muted':'#7a7870','--border':'#333330','--accent':'#e08a6d','--accent-hover':'#d97757','--btn-dark-bg':'#eae8e1','--btn-dark-text':'#1a1a19','--tag-essential-bg':'#eae8e1','--tag-essential-text':'#1a1a19' },
+    fonts: {
+      display: { family: 'Crimson Pro', weights: ['300','400','500'], provider: 'google' },
+      body: { family: 'Inter', weights: ['300','400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'Full'
   },
-  generateThemeFromHue(25, 'Terracota Quente', 'Tons terrosos mais quentes'),
-  generateThemeFromHue(210, 'Azul Mineral', 'Cinzas neutros com azul sutil'),
-  generateThemeFromHue(150, 'Verde Floresta', 'Tons naturais e frescos'),
-  generateThemeFromHue(280, 'Lavanda Noite', 'Roxos suaves e elegantes'),
-  generateThemeFromHue(45, 'Mel Dourado', 'Amarelos quentes e acolhedores'),
-  generateThemeFromHue(340, 'Rosa Seco', 'Tons rosados e sofisticados'),
-  generateThemeFromHue(185, 'Oceano Calmo', 'Azul-esverdeado tranquilo'),
-  generateThemeFromHue(0, 'Rubi', 'Vermelhos intensos e marcantes'),
-  generateThemeFromHue(95, 'Oliva', 'Verde-amarelado orgânico'),
+  {
+    name: 'Editorial Clássico',
+    description: 'Elegância editorial com serif moderno',
+    light: { '--bg':'#faf8f4','--bg-sidebar':'#f3f1eb','--bg-card':'#ffffff','--bg-code':'#edeae3','--bg-callout':'rgba(139,90,43,0.07)','--text':'#3b3832','--text-heading':'#1c1a16','--text-muted':'#9a9588','--border':'#e3e0d6','--accent':'#8b5a2b','--accent-hover':'#754c24','--btn-dark-bg':'#1c1a16','--btn-dark-text':'#faf8f4','--tag-essential-bg':'#1c1a16','--tag-essential-text':'#faf8f4' },
+    dark: { '--bg':'#1a1916','--bg-sidebar':'#141312','--bg-card':'#232220','--bg-code':'#2a2926','--bg-callout':'rgba(182,134,80,0.12)','--text':'#c8c4ba','--text-heading':'#eae6dc','--text-muted':'#7a7668','--border':'#333028','--accent':'#b68650','--accent-hover':'#8b5a2b','--btn-dark-bg':'#eae6dc','--btn-dark-text':'#1a1916','--tag-essential-bg':'#eae6dc','--tag-essential-text':'#1a1916' },
+    fonts: {
+      display: { family: 'Instrument Serif', weights: ['400'], provider: 'google' },
+      body: { family: 'Instrument Sans', weights: ['400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'M'
+  },
+  {
+    name: 'Humanista Quente',
+    description: 'Acessível e acolhedor com toques orgânicos',
+    light: { '--bg':'#faf8f3','--bg-sidebar':'#f4f1ea','--bg-card':'#ffffff','--bg-code':'#eeebe3','--bg-callout':'rgba(188,108,37,0.07)','--text':'#3a3730','--text-heading':'#1d1b16','--text-muted':'#989288','--border':'#e4e0d6','--accent':'#bc6c25','--accent-hover':'#a05c20','--btn-dark-bg':'#1d1b16','--btn-dark-text':'#faf8f3','--tag-essential-bg':'#1d1b16','--tag-essential-text':'#faf8f3' },
+    dark: { '--bg':'#1b1a16','--bg-sidebar':'#151412','--bg-card':'#24231f','--bg-code':'#2b2a26','--bg-callout':'rgba(220,150,70,0.12)','--text':'#c6c2b8','--text-heading':'#eae6da','--text-muted':'#787468','--border':'#343028','--accent':'#dc9646','--accent-hover':'#bc6c25','--btn-dark-bg':'#eae6da','--btn-dark-text':'#1b1a16','--tag-essential-bg':'#eae6da','--tag-essential-text':'#1b1a16' },
+    fonts: {
+      display: { family: 'Fraunces', weights: ['300','400','500'], provider: 'google' },
+      body: { family: 'Outfit', weights: ['300','400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'L'
+  },
+  {
+    name: 'Geométrico Frio',
+    description: 'Técnico e preciso com tons de aço',
+    light: { '--bg':'#f8f9fa','--bg-sidebar':'#f0f2f4','--bg-card':'#ffffff','--bg-code':'#eaecef','--bg-callout':'rgba(70,100,140,0.07)','--text':'#2d3238','--text-heading':'#12161a','--text-muted':'#8890a0','--border':'#dce0e6','--accent':'#46648c','--accent-hover':'#3a5478','--btn-dark-bg':'#12161a','--btn-dark-text':'#f8f9fa','--tag-essential-bg':'#12161a','--tag-essential-text':'#f8f9fa' },
+    dark: { '--bg':'#16181c','--bg-sidebar':'#121416','--bg-card':'#1e2026','--bg-code':'#24262c','--bg-callout':'rgba(100,140,200,0.12)','--text':'#b8bcc6','--text-heading':'#e0e4ec','--text-muted':'#606878','--border':'#2c3038','--accent':'#6490c8','--accent-hover':'#46648c','--btn-dark-bg':'#e0e4ec','--btn-dark-text':'#16181c','--tag-essential-bg':'#e0e4ec','--tag-essential-text':'#16181c' },
+    fonts: {
+      display: { family: 'Clash Display', weights: ['400','500','600'], provider: 'fontshare' },
+      body: { family: 'Sora', weights: ['300','400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'S'
+  },
+  {
+    name: 'Literário',
+    description: 'Clássico e legível como um bom livro',
+    light: { '--bg':'#faf9f6','--bg-sidebar':'#f2f0ec','--bg-card':'#ffffff','--bg-code':'#eceae4','--bg-callout':'rgba(60,80,60,0.07)','--text':'#34342e','--text-heading':'#1a1a16','--text-muted':'#8e8e80','--border':'#e0ddd4','--accent':'#5c7a5c','--accent-hover':'#4a6a4a','--btn-dark-bg':'#1a1a16','--btn-dark-text':'#faf9f6','--tag-essential-bg':'#1a1a16','--tag-essential-text':'#faf9f6' },
+    dark: { '--bg':'#1a1a18','--bg-sidebar':'#141414','--bg-card':'#222222','--bg-code':'#2a2a28','--bg-callout':'rgba(100,140,100,0.12)','--text':'#c4c4ba','--text-heading':'#e8e8de','--text-muted':'#747468','--border':'#303028','--accent':'#7aa07a','--accent-hover':'#5c7a5c','--btn-dark-bg':'#e8e8de','--btn-dark-text':'#1a1a18','--tag-essential-bg':'#e8e8de','--tag-essential-text':'#1a1a18' },
+    fonts: {
+      display: { family: 'Young Serif', weights: ['400'], provider: 'google' },
+      body: { family: 'DM Sans', weights: ['300','400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'M'
+  },
+  {
+    name: 'Brutalist',
+    description: 'Cru, direto e sem concessões',
+    light: { '--bg':'#ffffff','--bg-sidebar':'#f5f5f5','--bg-card':'#ffffff','--bg-code':'#eeeeee','--bg-callout':'rgba(220,40,40,0.07)','--text':'#1a1a1a','--text-heading':'#000000','--text-muted':'#666666','--border':'#cccccc','--accent':'#dc2828','--accent-hover':'#b82020','--btn-dark-bg':'#000000','--btn-dark-text':'#ffffff','--tag-essential-bg':'#000000','--tag-essential-text':'#ffffff' },
+    dark: { '--bg':'#0a0a0a','--bg-sidebar':'#050505','--bg-card':'#141414','--bg-code':'#1a1a1a','--bg-callout':'rgba(255,60,60,0.12)','--text':'#d0d0d0','--text-heading':'#ffffff','--text-muted':'#666666','--border':'#333333','--accent':'#ff3c3c','--accent-hover':'#dc2828','--btn-dark-bg':'#ffffff','--btn-dark-text':'#0a0a0a','--tag-essential-bg':'#ffffff','--tag-essential-text':'#0a0a0a' },
+    fonts: {
+      display: { family: 'Bricolage Grotesque', weights: ['400','600','800'], provider: 'google' },
+      body: { family: 'Space Grotesk', weights: ['300','400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'None'
+  },
+  {
+    name: 'Swiss Minimal',
+    description: 'Limpo, funcional e equilibrado',
+    light: { '--bg':'#fafaf8','--bg-sidebar':'#f2f2ee','--bg-card':'#ffffff','--bg-code':'#ecece6','--bg-callout':'rgba(100,120,90,0.07)','--text':'#383838','--text-heading':'#1a1a1a','--text-muted':'#8a8a80','--border':'#e0e0d8','--accent':'#64785a','--accent-hover':'#54684a','--btn-dark-bg':'#1a1a1a','--btn-dark-text':'#fafaf8','--tag-essential-bg':'#1a1a1a','--tag-essential-text':'#fafaf8' },
+    dark: { '--bg':'#1a1a18','--bg-sidebar':'#141414','--bg-card':'#222220','--bg-code':'#2a2a28','--bg-callout':'rgba(120,150,110,0.12)','--text':'#c0c0b8','--text-heading':'#e8e8e0','--text-muted':'#707068','--border':'#303028','--accent':'#8aaa78','--accent-hover':'#64785a','--btn-dark-bg':'#e8e8e0','--btn-dark-text':'#1a1a18','--tag-essential-bg':'#e8e8e0','--tag-essential-text':'#1a1a18' },
+    fonts: {
+      display: { family: 'General Sans', weights: ['400','500','600'], provider: 'fontshare' },
+      body: { family: 'General Sans', weights: ['300','400','500','600'], provider: 'fontshare' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'S'
+  },
+  {
+    name: 'Neo-grotesco',
+    description: 'Moderno e sofisticado com tons navy',
+    light: { '--bg':'#f8f7f4','--bg-sidebar':'#f0efe8','--bg-card':'#ffffff','--bg-code':'#eae8e0','--bg-callout':'rgba(30,50,80,0.07)','--text':'#2c3040','--text-heading':'#141828','--text-muted':'#8088a0','--border':'#dcdae0','--accent':'#1e3250','--accent-hover':'#162844','--btn-dark-bg':'#141828','--btn-dark-text':'#f8f7f4','--tag-essential-bg':'#141828','--tag-essential-text':'#f8f7f4' },
+    dark: { '--bg':'#141420','--bg-sidebar':'#101018','--bg-card':'#1c1c2a','--bg-code':'#222230','--bg-callout':'rgba(80,110,180,0.12)','--text':'#b8bcc8','--text-heading':'#e0e2ec','--text-muted':'#606478','--border':'#2a2c38','--accent':'#506eb4','--accent-hover':'#1e3250','--btn-dark-bg':'#e0e2ec','--btn-dark-text':'#141420','--tag-essential-bg':'#e0e2ec','--tag-essential-text':'#141420' },
+    fonts: {
+      display: { family: 'Darker Grotesque', weights: ['400','500','700'], provider: 'google' },
+      body: { family: 'Plus Jakarta Sans', weights: ['300','400','500','600'], provider: 'google' },
+      mono: { family: 'JetBrains Mono', weights: ['400','500'], provider: 'google' }
+    },
+    iconStyle: 'outline',
+    radius: 'M'
+  },
 ];
 
 // ===================================================================
@@ -891,54 +1275,115 @@ const WIREFRAME_MAP = [
 // STATE
 // ===================================================================
 let currentTheme = 'light';
-let currentTab = 'temas';
+let currentTab = 'componentes';
 let currentViewport = 'desktop';
 let wireframeOn = false;
 let changes = {};
 let undoStack = [];
+let redoStack = [];
 let notes = localStorage.getItem('tokenEditorNotes') || '';
 let attachments = JSON.parse(localStorage.getItem('editorAttachments') || '[]');
 let sectionStates = JSON.parse(localStorage.getItem('editorSections') || '{}');
 let previewingTheme = null;
 let activePresetIndex = -1;
-const TAB_NAMES = ['temas','cores','tipografia','espacamento','componentes','referencias'];
+let inspectActive = false;
+let selectedComponent = null;
+let openHSBPicker = null; // varName of the currently open HSB picker
+const TAB_NAMES = ['componentes','temas','ds','referencias'];
 
 // ===================================================================
-// UNDO SYSTEM
+// HSB <-> HEX CONVERSION
+// ===================================================================
+function hsbToHex(h, s, b) {
+  s /= 100; b /= 100;
+  const k = (n) => (n + h / 60) % 6;
+  const f = (n) => b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
+  const r = Math.round(f(5) * 255);
+  const g = Math.round(f(3) * 255);
+  const bl = Math.round(f(1) * 255);
+  return '#' + [r, g, bl].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+function hexToHsb(hex) {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  const r = parseInt(hex.slice(0,2), 16) / 255;
+  const g = parseInt(hex.slice(2,4), 16) / 255;
+  const b = parseInt(hex.slice(4,6), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d + 6) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+  }
+  const s = max === 0 ? 0 : (d / max) * 100;
+  const v = max * 100;
+  return { h: Math.round(h), s: Math.round(s), b: Math.round(v) };
+}
+
+// ===================================================================
+// UNDO / REDO (10 passos)
 // ===================================================================
 function pushUndo() {
   if (previewingTheme) return;
   undoStack.push(JSON.parse(JSON.stringify(changes)));
   if (undoStack.length > 10) undoStack.shift();
-  updateUndoBtn();
+  redoStack = [];
+  updateUndoRedoUI();
 }
+
 function undo() {
   if (undoStack.length === 0) return;
+  redoStack.push(JSON.parse(JSON.stringify(changes)));
+  if (redoStack.length > 10) redoStack.shift();
   changes = undoStack.pop();
   reapplyAll();
   updateStatus();
-  updateUndoBtn();
+  updateUndoRedoUI();
   renderPanel();
 }
-function updateUndoBtn() {
-  const btn = document.getElementById('btnUndo');
-  const count = document.getElementById('undoCount');
-  btn.disabled = undoStack.length === 0;
-  count.textContent = undoStack.length > 0 ? undoStack.length : '';
+
+function redo() {
+  if (redoStack.length === 0) return;
+  undoStack.push(JSON.parse(JSON.stringify(changes)));
+  if (undoStack.length > 10) undoStack.shift();
+  changes = redoStack.pop();
+  reapplyAll();
+  updateStatus();
+  updateUndoRedoUI();
+  renderPanel();
 }
+
+function updateUndoRedoUI() {
+  const btnUndo = document.getElementById('btnUndo');
+  const btnRedo = document.getElementById('btnRedo');
+  const undoCount = document.getElementById('undoCount');
+  const redoCount = document.getElementById('redoCount');
+  btnUndo.disabled = undoStack.length === 0;
+  btnRedo.disabled = redoStack.length === 0;
+  undoCount.textContent = undoStack.length > 0 ? undoStack.length : '';
+  redoCount.textContent = redoStack.length > 0 ? redoStack.length : '';
+}
+
 document.addEventListener('keydown', (e) => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'z') { e.preventDefault(); undo(); }
+  if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'z') { e.preventDefault(); redo(); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key === 'z') { e.preventDefault(); undo(); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveTokens(); return; }
 });
 
 // ===================================================================
 // TABS
 // ===================================================================
 function renderTabs() {
-  const labels = [t('tabTemas'), t('tabCores'), t('tabTipo'), 'Layout', t('tabComponentes'), t('tabReferencias')];
+  const labels = [t('tabComponentes'), t('tabTemas'), t('tabDS'), t('tabReferencias')];
   document.getElementById('tabBar').innerHTML = TAB_NAMES.map((name, i) =>
-    `<button class="tab ${name === currentTab ? 'active' : ''}" onclick="switchTab('${name}')">${labels[i]}</button>`
+    `<button class="ed-tab ${name === currentTab ? 'active' : ''}" onclick="switchTab('${name}')">${labels[i]}</button>`
   ).join('');
 }
+
 function switchTab(tab) {
   currentTab = tab;
   renderTabs();
@@ -946,77 +1391,113 @@ function switchTab(tab) {
 }
 
 // ===================================================================
-// RENDER PANEL
+// RENDER PANEL (v4: unified Componentes tab)
 // ===================================================================
 function renderPanel() {
   const body = document.getElementById('panelBody');
   if (currentTab === 'temas') { renderTemasTab(body); return; }
+  if (currentTab === 'ds') { renderDSTab(body); return; }
   if (currentTab === 'referencias') { renderReferenciasTab(body); return; }
 
+  // COMPONENTES tab: Tipografia > Paleta > Layout > Componentes
   let html = '';
 
-  if (currentTab === 'cores') {
-    const themeTokens = TOKENS.cores[currentTheme];
-    for (const [groupKey, tokens] of Object.entries(themeTokens)) {
-      const groupLabel = t(groupKey) || groupKey;
-      html += `<div class="section"><div class="section-title">${groupLabel}</div>`;
-      for (const [varName, def] of Object.entries(tokens)) {
-        const val = changes[varName] || def.value;
-        const changed = changes[varName] && changes[varName] !== def.value;
-        html += renderColorRow(varName, def, val, changed);
-      }
-      html += '</div>';
-    }
-  } else if (currentTab === 'componentes') {
-    for (const [group, tokens] of Object.entries(TOKENS.componentes)) {
-      const collapsed = sectionStates[group] === true;
-      const iconPath = tokens._icon || '';
-      html += `<div class="section" style="margin-bottom:8px">`;
-      html += `<div class="comp-header ${collapsed ? 'collapsed' : ''}" onclick="toggleSection('${group}')">`;
-      html += `<svg class="comp-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${iconPath}"/></svg>`;
-      html += `<span class="comp-header-name">${group}</span>`;
-      html += `<svg class="comp-header-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
-      html += `</div>`;
-      html += `<div class="comp-body ${collapsed ? 'hidden' : ''}">`;
-      for (const [varName, def] of Object.entries(tokens)) {
-        if (varName.startsWith('_')) continue;
-        html += renderTokenRow(varName, def);
-      }
-      html += '</div></div>';
-    }
-  } else {
-    // tipografia or espacamento
-    const sectionTokens = TOKENS[currentTab];
-    if (!sectionTokens) { body.innerHTML = ''; return; }
-    for (const [group, tokens] of Object.entries(sectionTokens)) {
-      html += `<div class="section"><div class="section-title">${group}</div>`;
-      for (const [varName, def] of Object.entries(tokens)) {
-        html += renderTokenRow(varName, def);
-      }
-      html += '</div>';
-    }
+  // --- TIPOGRAFIA ---
+  html += `<div class="section"><div class="section-title">${t('secTipografia')}</div>`;
+  for (const [groupName, tokens] of Object.entries(TOKENS.tipografia)) {
+    html += renderCompCard(groupName, tokens, 'tipografia');
   }
+  html += '</div>';
+
+  // --- PALETA ---
+  html += `<div class="section"><div class="section-title">${t('secPaleta')}</div>`;
+  const themeTokens = TOKENS.cores[currentTheme];
+  for (const [groupKey, tokens] of Object.entries(themeTokens)) {
+    const groupLabel = t(groupKey) || groupKey;
+    html += `<div class="comp-card"><div class="comp-card-header ${sectionStates['cor_'+groupKey] ? 'collapsed' : ''}" onclick="toggleSection('cor_${groupKey}')">`;
+    html += `<svg class="comp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
+    html += `<span class="comp-name">${groupLabel}</span>`;
+    html += `</div>`;
+    html += `<div class="comp-card-body ${sectionStates['cor_'+groupKey] ? 'hidden' : ''}">`;
+    for (const [varName, def] of Object.entries(tokens)) {
+      const val = changes[varName] || def.value;
+      const changed = changes[varName] && changes[varName] !== def.value;
+      html += renderColorRow(varName, def, val, changed);
+    }
+    html += '</div></div>';
+  }
+  html += '</div>';
+
+  // --- LAYOUT ---
+  html += `<div class="section"><div class="section-title">${t('secLayout')}</div>`;
+  for (const [groupName, tokens] of Object.entries(TOKENS.espacamento)) {
+    html += renderCompCard(groupName, tokens, 'espacamento');
+  }
+  html += '</div>';
+
+  // --- COMPONENTES ---
+  html += `<div class="section"><div class="section-title">${t('secComponentes')}</div>`;
+  for (const [groupName, tokens] of Object.entries(TOKENS.componentes)) {
+    html += renderCompCard(groupName, tokens, 'componentes');
+  }
+  html += '</div>';
 
   body.innerHTML = html;
 }
 
-function renderColorRow(varName, def, val, changed) {
-  return `
-    <div class="token-row">
-      <span class="token-label" title="${varName}" style="${changed?'color:var(--ed-accent)':''}">${def.label}</span>
-      <div class="color-input-wrap">
-        <div class="color-swatch" style="background:${val}">
-          <input type="color" value="${toHex6(val)}" onchange="updateColor('${varName}','${def.value}',this.value)">
-        </div>
-        <input class="color-hex" value="${val}" onchange="updateColor('${varName}','${def.value}',this.value)" spellcheck="false">
-      </div>
-    </div>`;
+function renderCompCard(groupName, tokens, section) {
+  const collapsed = sectionStates[groupName] === true;
+  const iconPath = tokens._icon || '';
+  const hasChanges = hasGroupChanges(groupName, tokens);
+
+  // Build preview text
+  let preview = '';
+  if (section === 'tipografia') {
+    const fontVar = Object.keys(tokens).find(k => tokens[k].type === 'font');
+    const sizeVar = Object.keys(tokens).find(k => tokens[k].type === 'slider' && tokens[k].label === 'tamanho');
+    const weightVar = Object.keys(tokens).find(k => tokens[k].type === 'select' && tokens[k].label === 'peso');
+    if (fontVar) {
+      const fontVal = changes[fontVar] || tokens[fontVar].value;
+      const fontName = fontVal.split("'")[1] || fontVal.split(',')[0].trim();
+      const sizeVal = sizeVar ? (changes[sizeVar] || tokens[sizeVar].value) : '';
+      const weightVal = weightVar ? (changes[weightVar] || tokens[weightVar].value) : '';
+      preview = `${fontName} · ${sizeVal}px · ${weightVal}`;
+    }
+  }
+
+  let html = `<div class="comp-card">`;
+  html += `<div class="comp-card-header ${collapsed ? 'collapsed' : ''}" onclick="toggleSection('${groupName}')">`;
+  html += `<svg class="comp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
+  if (iconPath) {
+    html += `<svg style="width:14px;height:14px;color:var(--ed-text-muted);flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${iconPath}"/></svg>`;
+  }
+  html += `<span class="comp-name">${groupName}</span>`;
+  if (preview) html += `<span class="comp-preview">${preview}</span>`;
+  html += `<span class="comp-dot ${hasChanges ? 'visible' : ''}"></span>`;
+  html += `</div>`;
+  html += `<div class="comp-card-body ${collapsed ? 'hidden' : ''}">`;
+  for (const [varName, def] of Object.entries(tokens)) {
+    if (varName.startsWith('_')) continue;
+    html += renderTokenRow(varName, def);
+  }
+  html += '</div></div>';
+  return html;
 }
 
+function hasGroupChanges(groupName, tokens) {
+  for (const varName of Object.keys(tokens)) {
+    if (varName.startsWith('_')) continue;
+    if (changes[varName] !== undefined && changes[varName] != tokens[varName].value) return true;
+  }
+  return false;
+}
+
+// ===================================================================
+// RENDER TOKEN ROW
+// ===================================================================
 function renderTokenRow(varName, def) {
   const val = changes[varName] !== undefined ? changes[varName] : def.value;
   const changed = changes[varName] !== undefined && changes[varName] != def.value;
-  const style = changed ? 'color:var(--ed-accent)' : '';
   const labelKey = def.label;
   const label = LANG[currentLang][labelKey] || labelKey;
 
@@ -1025,7 +1506,7 @@ function renderTokenRow(varName, def) {
     const unit = def.unit || 'px';
     return `
       <div class="token-row">
-        <span class="token-label" title="${varName}" style="${style}">${label}</span>
+        <span class="token-label ${changed?'changed':''}" title="${varName}">${label}</span>
         <div class="token-slider-wrap">
           <input type="range" class="token-slider" min="${def.min}" max="${def.max}" step="${step}" value="${val}"
             oninput="updateProp('${varName}','${def.value}',this.value,this)">
@@ -1035,7 +1516,7 @@ function renderTokenRow(varName, def) {
   } else if (def.type === 'select') {
     return `
       <div class="token-row">
-        <span class="token-label" title="${varName}" style="${style}">${label}</span>
+        <span class="token-label ${changed?'changed':''}" title="${varName}">${label}</span>
         <select class="token-select" onchange="updateProp('${varName}','${def.value}',this.value)">
           ${def.options.map(o => `<option value="${o}" ${o==val?'selected':''}>${o}</option>`).join('')}
         </select>
@@ -1043,7 +1524,7 @@ function renderTokenRow(varName, def) {
   } else if (def.type === 'font') {
     return `
       <div class="token-row">
-        <span class="token-label" title="${varName}" style="${style}">${label}</span>
+        <span class="token-label ${changed?'changed':''}" title="${varName}">${label}</span>
         <select class="token-select" onchange="updateProp('${varName}','${def.value}',this.value)">
           ${FONT_OPTIONS.map(o => `<option value="${o.value}" ${o.value===val?'selected':''}>${o.label}</option>`).join('')}
         </select>
@@ -1055,23 +1536,24 @@ function renderTokenRow(varName, def) {
     ).join('') + `<option value="__custom" ${!isSemantic?'selected':''}>${t('personalizado')}</option>`;
     let row = `
       <div class="token-row">
-        <span class="token-label" title="${varName}" style="${style}">${label}</span>
+        <span class="token-label ${changed?'changed':''}" title="${varName}">${label}</span>
         <div class="sem-color-wrap">
           <select class="token-select sem-color-select" onchange="updateSemColor('${varName}','${def.value}',this.value)">
             ${options}
           </select>`;
     if (!isSemantic) {
-      row += `<div class="color-swatch" style="background:${val};width:22px;height:22px">
-        <input type="color" value="${toHex6(val)}" onchange="updateProp('${varName}','${def.value}',this.value)" style="width:30px;height:30px">
-      </div>`;
+      row += `<div class="color-swatch" style="background:${val};width:22px;height:22px" onclick="toggleHSBPicker('${varName}','${def.value}')"></div>`;
     }
     row += `</div></div>`;
+    if (!isSemantic && openHSBPicker === varName) {
+      row += renderHSBPicker(varName, def.value, val);
+    }
     return row;
   } else if (def.type === 'toggle') {
     const isOn = val === 'true' || val === true;
     return `
       <div class="token-row">
-        <span class="token-label" title="${varName}" style="${style}">${label}</span>
+        <span class="token-label ${changed?'changed':''}" title="${varName}">${label}</span>
         <div class="toggle-wrap">
           <button class="toggle-switch ${isOn ? 'on' : ''}" onclick="updateToggle('${varName}','${def.value}')"></button>
         </div>
@@ -1083,7 +1565,7 @@ function renderTokenRow(varName, def) {
     ];
     return `
       <div class="token-row">
-        <span class="token-label" title="${varName}" style="${style}">${label}</span>
+        <span class="token-label ${changed?'changed':''}" title="${varName}">${label}</span>
         <div class="radius-options">
           ${opts.map(o => `<button class="radius-opt ${o.v==val?'active':''}" onclick="updateProp('${varName}','${def.value}','${o.v}');renderPanel()">${o.label}</button>`).join('')}
         </div>
@@ -1093,7 +1575,111 @@ function renderTokenRow(varName, def) {
 }
 
 // ===================================================================
-// TEMAS TAB
+// RENDER COLOR ROW (Paleta)
+// ===================================================================
+function renderColorRow(varName, def, val, changed) {
+  let row = `
+    <div class="token-row">
+      <span class="token-label ${changed?'changed':''}" title="${varName}">${def.label}</span>
+      <div class="color-input-wrap">
+        <div class="color-swatch" style="background:${val}" onclick="toggleHSBPicker('${varName}',null)"></div>
+        <input class="color-hex" value="${val}" onchange="updateColor('${varName}','${def.value}',this.value)" spellcheck="false">
+      </div>
+    </div>`;
+  if (openHSBPicker === varName) {
+    row += renderHSBPicker(varName, def.value, val);
+  }
+  return row;
+}
+
+// ===================================================================
+// HSB PICKER INLINE
+// ===================================================================
+function toggleHSBPicker(varName, original) {
+  openHSBPicker = openHSBPicker === varName ? null : varName;
+  renderPanel();
+}
+
+function renderHSBPicker(varName, original, currentVal) {
+  const hex = toHex6(currentVal);
+  const hsb = hexToHsb(hex);
+
+  // Compute gradient stops for S and B sliders
+  const sGrad0 = hsbToHex(hsb.h, 0, hsb.b);
+  const sGrad100 = hsbToHex(hsb.h, 100, hsb.b);
+  const bGrad0 = hsbToHex(hsb.h, hsb.s, 0);
+  const bGrad100 = hsbToHex(hsb.h, hsb.s, 100);
+
+  return `
+    <div class="hsb-picker">
+      <div class="hsb-row">
+        <span class="hsb-label">H</span>
+        <input type="range" class="hsb-slider hue-slider" min="0" max="360" value="${hsb.h}"
+          oninput="updateHSB('${varName}','h',this.value)">
+        <span class="hsb-val">${hsb.h}°</span>
+      </div>
+      <div class="hsb-row">
+        <span class="hsb-label">S</span>
+        <input type="range" class="hsb-slider" min="0" max="100" value="${hsb.s}"
+          style="background:linear-gradient(to right,${sGrad0},${sGrad100})"
+          oninput="updateHSB('${varName}','s',this.value)">
+        <span class="hsb-val">${hsb.s}%</span>
+      </div>
+      <div class="hsb-row">
+        <span class="hsb-label">B</span>
+        <input type="range" class="hsb-slider" min="0" max="100" value="${hsb.b}"
+          style="background:linear-gradient(to right,${bGrad0},${bGrad100})"
+          oninput="updateHSB('${varName}','b',this.value)">
+        <span class="hsb-val">${hsb.b}%</span>
+      </div>
+      <div class="hsb-hex-row">
+        <div class="hsb-swatch-preview" style="background:${hex}"></div>
+        <input class="hsb-hex-input" value="${hex}" onchange="updateHSBHex('${varName}',this.value)" spellcheck="false">
+      </div>
+    </div>`;
+}
+
+function updateHSB(varName, channel, value) {
+  const currentVal = changes[varName] || findOriginalColor(varName);
+  const hex = toHex6(currentVal);
+  const hsb = hexToHsb(hex);
+  hsb[channel] = parseInt(value);
+  const newHex = hsbToHex(hsb.h, hsb.s, hsb.b);
+  pushUndo();
+  changes[varName] = newHex;
+  applyColorToFrame(varName, newHex);
+  updateStatus();
+  renderPanel();
+}
+
+function updateHSBHex(varName, hex) {
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex) && !/^#[0-9a-fA-F]{3}$/.test(hex)) return;
+  pushUndo();
+  changes[varName] = hex;
+  applyColorToFrame(varName, hex);
+  updateStatus();
+  renderPanel();
+}
+
+function findOriginalColor(varName) {
+  // Search in cores
+  for (const theme of ['light','dark']) {
+    for (const grp of Object.values(TOKENS.cores[theme])) {
+      if (grp[varName]) return grp[varName].value;
+    }
+  }
+  // Search in other sections
+  const def = findDef(varName);
+  return def ? def.value : '#888888';
+}
+
+function applyColorToFrame(varName, value) {
+  const doc = getFrameDoc();
+  if (doc) doc.documentElement.style.setProperty(varName, value);
+}
+
+// ===================================================================
+// TEMAS TAB (v4: com fontes + radius + tags)
 // ===================================================================
 function renderTemasTab(body) {
   let html = `
@@ -1105,6 +1691,7 @@ function renderTemasTab(body) {
   THEME_PRESETS.forEach((preset, i) => {
     const colors = currentTheme === 'dark' ? preset.dark : preset.light;
     const isActive = activePresetIndex === i;
+    const fontInfo = preset.fonts ? `${preset.fonts.display.family} + ${preset.fonts.body.family}` : '';
     html += `
       <div class="theme-card ${isActive ? 'active-theme' : ''}"
         onmouseenter="previewThemePreset(${i})"
@@ -1112,6 +1699,7 @@ function renderTemasTab(body) {
         onclick="applyThemePreset(${i})">
         <div class="theme-card-name">${preset.name}</div>
         <div class="theme-card-desc">${preset.description}</div>
+        ${fontInfo ? `<div class="theme-card-fonts">${fontInfo}</div>` : ''}
         <div class="theme-swatches">
           <span class="theme-swatch" style="background:${colors['--bg']}"></span>
           <span class="theme-swatch" style="background:${colors['--text']}"></span>
@@ -1119,6 +1707,7 @@ function renderTemasTab(body) {
           <span class="theme-swatch" style="background:${colors['--text-muted']}"></span>
           <span class="theme-swatch" style="background:${colors['--border']}"></span>
         </div>
+        ${preset.radius ? `<div class="theme-card-meta"><span class="theme-card-tag">Radius: ${preset.radius}</span></div>` : ''}
       </div>`;
   });
 
@@ -1155,10 +1744,80 @@ function applyThemePreset(index) {
   for (const [k, v] of Object.entries(colors)) {
     changes[k] = v;
   }
+
+  // Apply font changes if preset has fonts
+  if (preset.fonts) {
+    loadThemeFonts(preset.fonts);
+    // Map display font to title/desc/h2
+    const displayFam = `'${preset.fonts.display.family}', serif`;
+    const bodyFam = `'${preset.fonts.body.family}', sans-serif`;
+    changes['--title-font'] = displayFam;
+    changes['--desc-font'] = displayFam;
+    changes['--h2-font'] = bodyFam;
+    changes['--label-font'] = bodyFam;
+    changes['--body-font'] = bodyFam;
+
+    // Apply to iframe
+    const doc = getFrameDoc();
+    if (doc) {
+      doc.querySelectorAll('.page-title').forEach(el => el.style.fontFamily = displayFam);
+      doc.querySelectorAll('.page-desc').forEach(el => el.style.fontFamily = displayFam);
+      doc.querySelectorAll('h2, .dash-section-title').forEach(el => el.style.fontFamily = bodyFam);
+      doc.querySelectorAll('.section-label, .sidebar-section-label, .dash-category-label').forEach(el => el.style.fontFamily = bodyFam);
+      doc.querySelectorAll('body').forEach(el => el.style.fontFamily = bodyFam);
+    }
+  }
+
+  // Apply radius if present
+  if (preset.radius) {
+    const radiusMap = { 'None': '0', 'S': '4', 'M': '8', 'L': '12', 'Full': '100' };
+    const rv = radiusMap[preset.radius] || '8';
+    changes['--btn-radius'] = rv;
+    changes['--callout-radius'] = preset.radius === 'None' ? '0' : (preset.radius === 'Full' ? '16' : rv);
+    changes['--dash-card-radius'] = preset.radius === 'None' ? '0' : rv;
+    applyPropToFrame('--btn-radius', rv);
+    applyPropToFrame('--callout-radius', changes['--callout-radius']);
+    applyPropToFrame('--dash-card-radius', changes['--dash-card-radius']);
+  }
+
   activePresetIndex = index;
   reapplyAll();
   updateStatus();
   renderPanel();
+}
+
+function loadThemeFonts(fonts) {
+  const doc = getFrameDoc();
+  if (!doc) return;
+
+  // Remove existing theme font links
+  doc.querySelectorAll('link[data-theme-fonts]').forEach(el => el.remove());
+
+  // Google Fonts
+  const googleFonts = [fonts.display, fonts.body, fonts.mono].filter(f => f.provider === 'google');
+  if (googleFonts.length > 0) {
+    const families = googleFonts.map(f =>
+      f.family.replace(/ /g, '+') + ':wght@' + f.weights.join(';')
+    );
+    const link = doc.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=' + families.join('&family=') + '&display=swap';
+    link.setAttribute('data-theme-fonts', 'google');
+    doc.head.appendChild(link);
+  }
+
+  // Fontshare
+  const fontshareFonts = [fonts.display, fonts.body].filter(f => f.provider === 'fontshare');
+  if (fontshareFonts.length > 0) {
+    fontshareFonts.forEach(f => {
+      const slug = f.family.toLowerCase().replace(/ /g, '-');
+      const link = doc.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = `https://api.fontshare.com/v2/css?f[]=${slug}@${f.weights.join(',')}&display=swap`;
+      link.setAttribute('data-theme-fonts', 'fontshare');
+      doc.head.appendChild(link);
+    });
+  }
 }
 
 function generateMoreThemes() {
@@ -1167,6 +1826,113 @@ function generateMoreThemes() {
     THEME_PRESETS.push(generateThemeFromHue(hue));
   }
   renderPanel();
+}
+
+// ===================================================================
+// DESIGN SYSTEM TAB (v4: integrada)
+// ===================================================================
+function renderDSTab(body) {
+  let html = '';
+
+  // --- PALETA COMPLETA ---
+  html += `<div class="section"><div class="section-title">${t('dsPaleta')}</div>`;
+  html += '<div class="ds-swatch-grid">';
+  const themeTokens = TOKENS.cores[currentTheme];
+  for (const grp of Object.values(themeTokens)) {
+    for (const [varName, def] of Object.entries(grp)) {
+      const val = changes[varName] || def.value;
+      html += `<div class="ds-swatch-card" onclick="navigator.clipboard.writeText('${val}')">
+        <div class="ds-swatch-box" style="background:${val}"></div>
+        <div class="ds-swatch-name">${varName}</div>
+        <div class="ds-swatch-hex">${val}</div>
+      </div>`;
+    }
+  }
+  html += '</div></div>';
+
+  // --- ESCALA TIPOGRÁFICA ---
+  html += `<div class="section"><div class="section-title">${t('dsEscala')}</div>`;
+  const typeEntries = [
+    { name: 'Título', varSize: '--title-size', varFont: '--title-font', varWeight: '--title-weight', defSize: '72', defFont: "'Crimson Pro', Georgia, serif", defWeight: '400' },
+    { name: 'Subtítulo (H2)', varSize: '--h2-size', varFont: '--h2-font', varWeight: '--h2-weight', defSize: '28', defFont: "'Outfit', sans-serif", defWeight: '700' },
+    { name: 'Descrição', varSize: '--desc-size', varFont: '--desc-font', varWeight: '--desc-weight', defSize: '18', defFont: "'Crimson Pro', Georgia, serif", defWeight: '400' },
+    { name: 'Corpo', varSize: '--body-size', varFont: '--body-font', varWeight: null, defSize: '15', defFont: "'Inter', -apple-system, sans-serif", defWeight: '400' },
+    { name: 'Nome do termo', varSize: '--tn-size', varFont: '--tn-font', varWeight: '--tn-weight', defSize: '13.5', defFont: "'JetBrains Mono', monospace", defWeight: '500' },
+    { name: 'Código inline', varSize: '--code-size', varFont: '--code-font', varWeight: null, defSize: '12', defFont: "'JetBrains Mono', monospace", defWeight: '400' },
+    { name: 'Section label', varSize: '--label-size', varFont: '--label-font', varWeight: '--label-weight', defSize: '11', defFont: "'Outfit', sans-serif", defWeight: '600' },
+  ];
+
+  for (const entry of typeEntries) {
+    const size = changes[entry.varSize] || entry.defSize;
+    const font = changes[entry.varFont] || entry.defFont;
+    const weight = entry.varWeight ? (changes[entry.varWeight] || entry.defWeight) : entry.defWeight;
+    const fontName = font.split("'")[1] || font.split(',')[0].trim();
+    const displaySize = Math.min(parseFloat(size), 40); // cap display size
+
+    html += `<div class="ds-type-sample">
+      <div style="font-family:${font};font-size:${displaySize}px;font-weight:${weight};color:var(--ed-text-heading);line-height:1.2;margin-bottom:2px">${entry.name}</div>
+      <div class="ds-type-meta">${size}px · ${fontName} · ${weight}</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  // --- ESPAÇAMENTO ---
+  html += `<div class="section"><div class="section-title">${t('dsEspacamento')}</div>`;
+  const spacings = [
+    { name: '--main-pt', def: '56' }, { name: '--main-px', def: '80' },
+    { name: '--section-gap', def: '64' }, { name: '--term-gap', def: '32' },
+    { name: '--term-pad', def: '18' }, { name: '--divider-margin', def: '80' },
+  ];
+  for (const sp of spacings) {
+    const val = changes[sp.name] || sp.def;
+    const pct = (parseInt(val) / 120) * 100;
+    html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ed-text-muted);min-width:120px">${sp.name}</span>
+      <div class="ds-spacing-bar" style="width:${Math.min(pct,100)}%"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ed-text)">${val}px</span>
+    </div>`;
+  }
+  html += '</div>';
+
+  // --- BORDER RADIUS ---
+  html += `<div class="section"><div class="section-title">${t('dsRadius')}</div>`;
+  html += '<div class="ds-radius-grid">';
+  const radii = [
+    { label: 'None', val: '0' }, { label: 'S', val: '4px' },
+    { label: 'M', val: '8px' }, { label: 'L', val: '12px' }, { label: 'Full', val: '100px' }
+  ];
+  for (const r of radii) {
+    html += `<div class="ds-radius-box" style="border-radius:${r.val}">${r.label}</div>`;
+  }
+  html += '</div></div>';
+
+  // --- ÍCONES ---
+  html += `<div class="section"><div class="section-title">${t('dsIcones')}</div>`;
+  html += '<div class="ds-icon-grid" id="dsIconGrid"></div></div>';
+
+  body.innerHTML = html;
+
+  // Load icons async
+  loadDSIcons();
+}
+
+async function loadDSIcons() {
+  const grid = document.getElementById('dsIconGrid');
+  if (!grid) return;
+  const iconNames = [
+    'search','menu','x','arrow-right','arrow-left','external-link','sun','moon',
+    'book-open','terminal','code','file-text','folder','git-branch','command',
+    'settings','chevron-right','chevron-down','check','info','alert-triangle',
+    'copy','download','link','home','list','hash','zap','layers','package','globe'
+  ];
+  const strokeWidth = changes['--icon-stroke'] || '2';
+  let html = '';
+  for (const name of iconNames) {
+    html += `<div class="ds-icon-cell" title="${name}">
+      <img src="icons/${name}.svg" style="width:20px;height:20px;filter:brightness(0.7)" onerror="this.style.display='none'">
+    </div>`;
+  }
+  grid.innerHTML = html;
 }
 
 // ===================================================================
@@ -1180,7 +1946,7 @@ function renderReferenciasTab(body) {
       <textarea class="notes-textarea" id="notesField" placeholder="${t('notesPlaceholder')}"
         oninput="saveNotes(this.value)">${notes}</textarea>
       <div class="notes-actions">
-        <button class="tool-btn primary" onclick="copyNotes()">${t('copyNotes')}</button>
+        <button class="tool-btn" style="background:var(--ed-accent);color:white;border-color:var(--ed-accent)" onclick="copyNotes()">${t('copyNotes')}</button>
         <button class="tool-btn ghost" onclick="clearNotes()">${t('clearNotes')}</button>
       </div>
     </div>
@@ -1246,7 +2012,6 @@ function addImageAttachment() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
-      // Resize via canvas
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement('canvas');
@@ -1301,10 +2066,8 @@ function saveAttachments() {
 }
 
 function getVideoEmbed(url) {
-  // YouTube
   let m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
   if (m) return `https://www.youtube.com/embed/${m[1]}`;
-  // Loom
   m = url.match(/loom\.com\/share\/([a-zA-Z0-9]+)/);
   if (m) return `https://www.loom.com/embed/${m[1]}`;
   return null;
@@ -1317,6 +2080,158 @@ function toggleSection(name) {
   sectionStates[name] = !sectionStates[name];
   localStorage.setItem('editorSections', JSON.stringify(sectionStates));
   renderPanel();
+}
+
+// ===================================================================
+// INSPECT MODE (Control+hover)
+// ===================================================================
+let inspectOverlay = null;
+let inspectTooltip = null;
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Control' && !inspectActive) enterInspectMode();
+});
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'Control' && inspectActive) exitInspectMode();
+});
+
+function enterInspectMode() {
+  inspectActive = true;
+  document.getElementById('inspectHint').classList.add('visible');
+
+  const doc = getFrameDoc();
+  if (!doc) return;
+
+  // Inject overlay elements
+  inspectOverlay = doc.createElement('div');
+  inspectOverlay.id = 'inspect-overlay';
+  inspectOverlay.style.cssText = 'position:fixed;pointer-events:none;z-index:99999;border:2px solid rgba(99,140,210,0.8);background:rgba(99,140,210,0.08);transition:all 0.1s;display:none';
+  doc.body.appendChild(inspectOverlay);
+
+  inspectTooltip = doc.createElement('div');
+  inspectTooltip.id = 'inspect-tooltip';
+  inspectTooltip.style.cssText = "position:fixed;z-index:100000;background:#232322;color:white;font-family:'Inter',sans-serif;font-size:11px;padding:6px 10px;border-radius:6px;pointer-events:none;display:none;white-space:nowrap";
+  doc.body.appendChild(inspectTooltip);
+
+  // Add crosshair
+  let styleEl = doc.getElementById('inspect-style');
+  if (!styleEl) {
+    styleEl = doc.createElement('style');
+    styleEl.id = 'inspect-style';
+    doc.head.appendChild(styleEl);
+  }
+  styleEl.textContent = '* { cursor: crosshair !important; }';
+
+  // Listeners
+  doc.addEventListener('mousemove', onInspectHover);
+  doc.addEventListener('click', onInspectClick, true);
+}
+
+function exitInspectMode() {
+  inspectActive = false;
+  document.getElementById('inspectHint').classList.remove('visible');
+
+  const doc = getFrameDoc();
+  if (!doc) return;
+
+  // Remove overlay, tooltip, crosshair
+  const overlay = doc.getElementById('inspect-overlay');
+  if (overlay) overlay.remove();
+  const tooltip = doc.getElementById('inspect-tooltip');
+  if (tooltip) tooltip.remove();
+  const styleEl = doc.getElementById('inspect-style');
+  if (styleEl) styleEl.remove();
+
+  doc.removeEventListener('mousemove', onInspectHover);
+  doc.removeEventListener('click', onInspectClick, true);
+
+  inspectOverlay = null;
+  inspectTooltip = null;
+}
+
+function onInspectHover(e) {
+  const doc = getFrameDoc();
+  if (!doc || !inspectOverlay) return;
+
+  let current = e.target;
+  while (current && current !== doc.body) {
+    for (const [selector, info] of Object.entries(SELECTOR_MAP)) {
+      try {
+        if (current.matches(selector)) {
+          showHighlight(current, info.name);
+          return;
+        }
+      } catch(err) {}
+    }
+    current = current.parentElement;
+  }
+  hideHighlight();
+}
+
+function onInspectClick(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const doc = getFrameDoc();
+  if (!doc) return;
+
+  let current = e.target;
+  while (current && current !== doc.body) {
+    for (const [selector, info] of Object.entries(SELECTOR_MAP)) {
+      try {
+        if (current.matches(selector)) {
+          selectedComponent = info;
+          switchToComponentView(info);
+          return;
+        }
+      } catch(err) {}
+    }
+    current = current.parentElement;
+  }
+}
+
+function showHighlight(el, name) {
+  if (!inspectOverlay || !inspectTooltip) return;
+  const rect = el.getBoundingClientRect();
+  inspectOverlay.style.display = 'block';
+  inspectOverlay.style.top = rect.top + 'px';
+  inspectOverlay.style.left = rect.left + 'px';
+  inspectOverlay.style.width = rect.width + 'px';
+  inspectOverlay.style.height = rect.height + 'px';
+
+  inspectTooltip.style.display = 'block';
+  inspectTooltip.textContent = name;
+  inspectTooltip.style.left = rect.left + 'px';
+  inspectTooltip.style.top = (rect.top - 30) + 'px';
+}
+
+function hideHighlight() {
+  if (inspectOverlay) inspectOverlay.style.display = 'none';
+  if (inspectTooltip) inspectTooltip.style.display = 'none';
+}
+
+function switchToComponentView(info) {
+  // Switch to Componentes tab and expand the right section
+  currentTab = 'componentes';
+
+  // Expand the section
+  sectionStates[info.name] = false;
+  localStorage.setItem('editorSections', JSON.stringify(sectionStates));
+
+  renderTabs();
+  renderPanel();
+
+  // Scroll to the component
+  setTimeout(() => {
+    const body = document.getElementById('panelBody');
+    const headers = body.querySelectorAll('.comp-name');
+    for (const h of headers) {
+      if (h.textContent === info.name) {
+        h.closest('.comp-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
+      }
+    }
+  }, 50);
 }
 
 // ===================================================================
@@ -1350,7 +2265,7 @@ function updateProp(varName, original, value, sliderEl) {
     const def = findDef(varName);
     if (valSpan && def) valSpan.textContent = value + (def.unit || '');
     const label = sliderEl.closest('.token-row').querySelector('.token-label');
-    if (label && value != original) label.style.color = 'var(--ed-accent)';
+    if (label && value != original) label.classList.add('changed');
   }
 }
 
@@ -1362,16 +2277,15 @@ function updateSemColor(varName, original, value) {
   } else {
     pushUndo();
     changes[varName] = value;
-    // Resolve var() for the iframe
     const doc = getFrameDoc();
     if (doc) {
-      const resolved = getComputedStyle(doc.documentElement).getPropertyValue(value.replace('var(','').replace(')','').trim());
       const def = findDef(varName);
       if (def && def.selector) {
         doc.querySelectorAll(def.selector).forEach(el => { el.style[def.prop] = value; });
       }
     }
   }
+  openHSBPicker = null;
   updateStatus();
   renderPanel();
 }
@@ -1382,7 +2296,6 @@ function updateToggle(varName, original) {
   const newVal = (current === 'true' || current === true) ? 'false' : 'true';
   changes[varName] = newVal;
 
-  // Special handling for Claudinho mobile visibility
   if (varName === '--claud-mobile') {
     const doc = getFrameDoc();
     if (doc) {
@@ -1390,13 +2303,8 @@ function updateToggle(varName, original) {
       if (claudinho) {
         if (newVal === 'false') {
           claudinho.setAttribute('data-hide-mobile', 'true');
-          // Inject a style rule
           let styleEl = doc.getElementById('claud-mobile-style');
-          if (!styleEl) {
-            styleEl = doc.createElement('style');
-            styleEl.id = 'claud-mobile-style';
-            doc.head.appendChild(styleEl);
-          }
+          if (!styleEl) { styleEl = doc.createElement('style'); styleEl.id = 'claud-mobile-style'; doc.head.appendChild(styleEl); }
           styleEl.textContent = '@media(max-width:860px){.claudinho[data-hide-mobile="true"]{display:none!important}}';
         } else {
           claudinho.removeAttribute('data-hide-mobile');
@@ -1455,7 +2363,6 @@ function setTheme(theme) {
   }
   document.getElementById('btnLight').classList.toggle('active', theme==='light');
   document.getElementById('btnDark').classList.toggle('active', theme==='dark');
-  updateStatusLabel();
   reapplyAll();
   renderPanel();
 }
@@ -1472,7 +2379,6 @@ function setViewport(mode) {
   document.getElementById('btnMobile').style.borderColor = mode==='mobile' ? 'var(--ed-accent)' : '';
   document.getElementById('btnMobile').style.color = mode==='mobile' ? 'var(--ed-accent)' : '';
   document.getElementById('sizeLabel').textContent = mode === 'mobile' ? '390px' : '100%';
-  updateStatusLabel();
 }
 
 // ===================================================================
@@ -1483,6 +2389,7 @@ function toggleWireframe() {
   document.getElementById('btnWireframe').classList.toggle('wire-active', wireframeOn);
   applyWireframe();
 }
+
 function applyWireframe() {
   const doc = getFrameDoc();
   if (!doc) return;
@@ -1501,7 +2408,7 @@ function applyWireframe() {
       el.classList.add('wf-outline');
       const label = doc.createElement('span');
       label.className = 'wf-label';
-      label.textContent = item.name + ` ${Math.round(el.offsetWidth)}x${Math.round(el.offsetHeight)}`;
+      label.textContent = item.name + ` ${Math.round(el.offsetWidth)}×${Math.round(el.offsetHeight)}`;
       el.style.position = el.style.position || 'relative';
       el.appendChild(label);
     });
@@ -1547,6 +2454,7 @@ function resetAll() {
   pushUndo();
   changes = {};
   activePresetIndex = -1;
+  openHSBPicker = null;
   const frame = getFrame();
   frame.src = frame.src;
   frame.onload = () => {
@@ -1586,7 +2494,6 @@ function reapplyAll() {
     if (colorKeys.has(k)) {
       doc.documentElement.style.setProperty(k, v);
     } else if (k === '--claud-mobile') {
-      // Re-apply Claudinho mobile toggle
       const claudinho = doc.querySelector('.claudinho');
       if (claudinho && v === 'false') {
         claudinho.setAttribute('data-hide-mobile', 'true');
@@ -1627,7 +2534,6 @@ async function saveTokens() {
     if (colorKeysDark.has(varName)) payload.dark[varName] = value;
   }
 
-  // Only send if there are color changes
   if (Object.keys(payload.light).length === 0 && Object.keys(payload.dark).length === 0) {
     showToast(t('noChanges'), false);
     return;
@@ -1663,12 +2569,6 @@ function updateStatus() {
   const badge = document.getElementById('changesBadge');
   badge.textContent = count;
   badge.classList.toggle('hidden', count === 0);
-  document.getElementById('statusText').textContent =
-    count === 0 ? t('noChanges') : t('tokensChanged', count);
-}
-
-function updateStatusLabel() {
-  document.getElementById('statusTheme').textContent = `${currentTheme} · ${currentViewport}`;
 }
 
 function showToast(msg, isError) {
@@ -1679,27 +2579,24 @@ function showToast(msg, isError) {
 }
 
 // ===================================================================
-// RENDER ALL (for lang toggle)
+// RENDER ALL
 // ===================================================================
 function renderAll() {
-  document.getElementById('panelTitle').textContent = t('panelTitle');
-  document.getElementById('panelSubtitle').textContent = t('panelSubtitle');
-  document.getElementById('undoLabel').textContent = t('undo');
-  document.getElementById('btnReset').textContent = t('reset');
-  document.getElementById('overviewLabel').textContent = t('overview');
   document.getElementById('saveLabel').textContent = t('save');
   document.getElementById('btnLang').textContent = currentLang.toUpperCase();
+  document.getElementById('inspectHint').textContent = t('inspectHint');
   renderTabs();
   renderPanel();
   updateStatus();
+  updateUndoRedoUI();
 }
 
 // ===================================================================
 // INIT
 // ===================================================================
-getFrame().onload = () => { renderPanel(); updateUndoBtn(); };
+buildSelectorMap();
+getFrame().onload = () => { renderPanel(); updateUndoRedoUI(); };
 renderAll();
-updateUndoBtn();
 </script>
 </body>
 </html>
